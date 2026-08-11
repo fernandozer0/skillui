@@ -44,7 +44,7 @@ type App struct {
 	dataDir      string
 }
 
-// 数据根目录解析：SKILLUI_DATA_ROOT 环境变量 > ~/.skillui/client.json 的 dataPath > 默认 ~/.skillui/data。
+// 数据根目录解析：SKILLUI_DATA_ROOT 环境变量 > ~/.skillui/client.json 的 dataRoot > 默认 ~/.skillui/data。
 // 环境变量用于把正式使用数据隔离到独立目录（如安装版通过 macOS Info.plist 的 LSEnvironment 注入），
 // 避免被开发测试的种子数据污染/破坏。
 
@@ -55,36 +55,52 @@ const (
 	clientConfigName = "client.json"
 )
 
-// clientConfig 是 ~/.skillui/client.json 的结构，dataPath 记录数据根目录。
+// clientConfig 是 ~/.skillui/client.json 的结构，dataRoot 记录数据根目录。
 type clientConfig struct {
-	DataPath string `json:"dataPath"`
+	DataRoot string `json:"dataRoot"`
+}
+
+// UnmarshalJSON 兼容旧版 client.json 的 dataPath 字段（旧配置写入后自动升级为 dataRoot）。
+func (c *clientConfig) UnmarshalJSON(data []byte) error {
+	var raw struct {
+		DataRoot string `json:"dataRoot"`
+		DataPath string `json:"dataPath"`
+	}
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	c.DataRoot = raw.DataRoot
+	if c.DataRoot == "" {
+		c.DataRoot = raw.DataPath
+	}
+	return nil
 }
 
 // loadClientConfig 解析数据根目录，优先级：
-// SKILLUI_DATA_ROOT 环境变量（有值，支持 ~ 展开）> client.json 的 dataPath > 默认 <root>/data。
-// client.json 不存在或 dataPath 为空时，将旧版直接存放在 ~/.skillui 下的数据迁移到默认数据目录，
+// SKILLUI_DATA_ROOT 环境变量（有值，支持 ~ 展开）> client.json 的 dataRoot > 默认 <root>/data。
+// client.json 不存在或 dataRoot 为空时，将旧版直接存放在 ~/.skillui 下的数据迁移到默认数据目录，
 // 并写入默认 client.json。
 func loadClientConfig(rootDir string) clientConfig {
 	// 1. SKILLUI_DATA_ROOT 环境变量优先级最高
 	if envRoot := strings.TrimSpace(os.Getenv(dataRootEnv)); envRoot != "" {
-		return clientConfig{DataPath: filepath.Clean(expandHome(envRoot))}
+		return clientConfig{DataRoot: filepath.Clean(expandHome(envRoot))}
 	}
 
 	cfgPath := filepath.Join(rootDir, clientConfigName)
-	defaultCfg := clientConfig{DataPath: filepath.Join(rootDir, "data")}
+	defaultCfg := clientConfig{DataRoot: filepath.Join(rootDir, "data")}
 
-	// 2. 读取 client.json 的 dataPath
+	// 2. 读取 client.json 的 dataRoot（旧版 dataPath 由 UnmarshalJSON 兼容）
 	if data, err := os.ReadFile(cfgPath); err == nil {
 		var cfg clientConfig
 		if json.Unmarshal(data, &cfg) == nil {
-			if dataPath := strings.TrimSpace(cfg.DataPath); dataPath != "" {
-				return clientConfig{DataPath: filepath.Clean(expandHome(dataPath))}
+			if dataRoot := strings.TrimSpace(cfg.DataRoot); dataRoot != "" {
+				return clientConfig{DataRoot: filepath.Clean(expandHome(dataRoot))}
 			}
 		}
 	}
 
 	// 3. client.json 不存在/损坏/为空 → 迁移旧数据并写入默认配置
-	migrateLegacyData(rootDir, defaultCfg.DataPath)
+	migrateLegacyData(rootDir, defaultCfg.DataRoot)
 	writeClientConfig(cfgPath, defaultCfg)
 	return defaultCfg
 }
@@ -124,10 +140,10 @@ func migrateLegacyData(rootDir, dataDir string) {
 }
 
 // getAppDataDir returns the unified app data directory.
-// Priority: SKILLUI_DATA_ROOT env > client.json dataPath > default ~/.skillui/data.
+// Priority: SKILLUI_DATA_ROOT env > client.json dataRoot > default ~/.skillui/data.
 func getAppDataDir() string {
 	homeDir, _ := os.UserHomeDir()
-	return loadClientConfig(filepath.Join(homeDir, ".skillui")).DataPath
+	return loadClientConfig(filepath.Join(homeDir, ".skillui")).DataRoot
 }
 
 // ProcessLogger holds the logger for a specific process
