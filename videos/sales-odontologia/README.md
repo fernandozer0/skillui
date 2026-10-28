@@ -80,3 +80,18 @@ python3 music4.py music4.wav && PAGE=reel4.html node render.js reel4_silent.mp4
 python3 music5.py music5.wav && PAGE=reel5.html node render.js reel5_silent.mp4
 ffmpeg -i reelN_silent.mp4 -i musicN.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart sales-odontologia-reels-vN.mp4
 ```
+
+## v6 — "Como funciona o implante em 3 passos" (`reel6.html`, `music6.py`)
+Estilo planta técnica (azul-marinho com grade): ilustração em corte mostra avaliação 🩻, instalação do pino 🔩 e coroa 👑.
+
+## v7 — "Vai colocar aparelho? Saiba disso antes" (`reel7.html`, `music7.py`)
+Formato carrossel: slides deslizando com pontos de página e 👉 indicando o arraste. 4 dicas + CTA.
+
+## v8 — "Você escova os dentes errado?" (`reel8.html`, `music8.py`)
+4 erros comuns: cada um aparece com ❌ (fundo rosado, emoji tremendo) e vira ✅ com a forma certa.
+
+## v9 — "Perguntas que a gente mais recebe" (`reel9.html`, `music9.py`)
+Caixinha de perguntas que gira na tela, pergunta sendo digitada e resposta em destaque.
+
+`lib/common.css` reúne os estilos do selo, do botão de WhatsApp e da marca usados a partir da v6.
+`render_all.sh 6 7 8 9` renderiza e junta o áudio de vários vídeos de uma vez.

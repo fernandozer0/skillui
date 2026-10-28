@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Implante em 3 passos</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  :root{--navy:#0c2140;--line:#bfe3ff;--cyan:#5cc8ff;--gold:#e9c56b}
+  #stage{background:var(--navy);color:#fff}
+  #grid{position:absolute;inset:0;background-image:
+    linear-gradient(rgba(191,227,255,.07) 2px,transparent 2px),linear-gradient(90deg,rgba(191,227,255,.07) 2px,transparent 2px),
+    linear-gradient(rgba(191,227,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(191,227,255,.035) 1px,transparent 1px);
+    background-size:180px 180px,180px 180px,36px 36px,36px 36px}
+  #glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 30%,rgba(92,200,255,.18),rgba(0,0,0,0) 70%)}
+  #brand{color:var(--line)}
+  #ill{position:absolute;left:90px;top:300px;width:900px;height:790px;overflow:visible}
+  .lbl{font-family:'Inter',sans-serif;font-size:24px;font-weight:700;fill:var(--line);letter-spacing:3px}
+  #hookTxt{position:absolute;left:0;right:0;top:1120px;text-align:center}
+  #hookTxt .a{font-size:130px}
+  #hookTxt .b{font-family:'Inter',sans-serif;font-size:54px;font-weight:700;margin-top:30px;color:var(--line)}
+  .step{position:absolute;left:80px;right:80px;top:1110px}
+  .step .k{display:flex;align-items:center;gap:20px;font-size:32px;font-weight:800;letter-spacing:8px;color:var(--cyan)}
+  .step .k .bar{flex:1;height:3px;background:linear-gradient(90deg,var(--cyan),rgba(92,200,255,0));transform-origin:0 50%}
+  .step .t{font-size:96px;margin-top:22px}
+  .step .d{font-family:'Inter',sans-serif;font-size:50px;font-weight:500;line-height:1.3;margin-top:22px;color:#dcebff}
+  #note{position:absolute;left:80px;right:80px;top:1130px;text-align:center;font-family:'Inter',sans-serif;font-size:56px;font-weight:700;line-height:1.3}
+  #cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center}
+  #cta .a{font-size:110px}
+  #cta .a span{color:var(--gold)}
+  #cta .big{width:230px;height:230px;margin-bottom:24px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="grid"></div><div id="glow"></div>
+  <div id="cam">
+    <svg id="ill" viewBox="0 0 800 700">
+      <defs><linearGradient id="ti" x1="0" x2="1"><stop offset="0" stop-color="#9fb3c8"/><stop offset=".5" stop-color="#e8f1fa"/><stop offset="1" stop-color="#8aa0b6"/></linearGradient>
+        <linearGradient id="cr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3ecf5"/></linearGradient></defs>
+      <g id="bone"><rect x="20" y="430" width="760" height="260" rx="20" fill="rgba(191,227,255,.07)" stroke="rgba(191,227,255,.5)" stroke-width="3" stroke-dasharray="14 10"/>
+        <text class="lbl" x="40" y="676">OSSO</text></g>
+      <g id="gum"><path d="M20 372 C 120 352 220 352 300 372 C 360 388 440 388 500 372 C 580 352 680 352 780 372 L780 440 L20 440 Z" fill="rgba(255,138,150,.22)" stroke="#ff9aa6" stroke-width="4"/>
+        <text class="lbl" x="660" y="425" style="fill:#ffb3bc">GENGIVA</text></g>
+      <path class="draw tooth" id="tl" d="" fill="rgba(255,255,255,.06)" stroke="#bfe3ff" stroke-width="5" stroke-linejoin="round"/>
+      <path class="draw tooth" id="tr" d="" fill="rgba(255,255,255,.06)" stroke="#bfe3ff" stroke-width="5" stroke-linejoin="round"/>
+      <g id="gap"><circle cx="400" cy="300" r="70" fill="none" stroke="#ff6b6b" stroke-width="5" stroke-dasharray="16 12"/><text x="400" y="318" text-anchor="middle" font-size="56" font-weight="900" fill="#ff6b6b" font-family="Montserrat">?</text></g>
+      <g id="scan"><rect x="20" y="-6" width="760" height="12" fill="#5cc8ff" opacity=".9"/><rect x="20" y="-60" width="760" height="60" fill="url(#scanfade)"/></g>
+      <defs><linearGradient id="scanfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5cc8ff" stop-opacity="0"/><stop offset="1" stop-color="#5cc8ff" stop-opacity=".35"/></linearGradient></defs>
+      <g id="target"><circle cx="400" cy="500" r="110" fill="none" stroke="#5cc8ff" stroke-width="4"/><path d="M400 370 V420 M400 580 V630 M270 500 H320 M480 500 H530" stroke="#5cc8ff" stroke-width="4"/></g>
+      <g id="implant">
+        <path d="M368 410 L432 410 L420 630 Q400 662 380 630 Z" fill="url(#ti)" stroke="#e8f1fa" stroke-width="3"/>
+        <path d="M362 440 L438 432 M364 475 L436 467 M366 510 L434 502 M369 545 L431 537 M372 580 L428 572 M376 612 L424 606" stroke="#6f859b" stroke-width="7" stroke-linecap="round"/>
+      </g>
+      <g id="abut"><path d="M380 360 L420 360 L426 410 L374 410 Z" fill="url(#ti)" stroke="#e8f1fa" stroke-width="3"/></g>
+      <g id="crown"><path d="" id="crp" fill="url(#cr)" stroke="#ffffff" stroke-width="4"/>
+        <path d="M352 250 C 350 280 352 310 358 330" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none" opacity=".9"/></g>
+      <g id="callImp"><path d="M440 520 L560 520 L600 480" stroke="#e9c56b" stroke-width="3" fill="none"/><text class="lbl" x="608" y="478" style="fill:#e9c56b">RAIZ DE TITÂNIO</text></g>
+      <g id="callCr"><path d="M330 280 L210 280 L170 240" stroke="#e9c56b" stroke-width="3" fill="none"/><text class="lbl" x="40" y="232" style="fill:#e9c56b">COROA</text></g>
+      <g id="spk" fill="#fff"><path d="M520 180 l7 20 20 7 -20 7 -7 20 -7 -20 -20 -7 20 -7z"/><path d="M290 160 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5z"/></g>
+    </svg>
+
+    <div id="hookTxt"><div class="x a">Perdeu<br>um dente?</div><div class="b">Veja como o implante devolve<br>o seu sorriso 👇</div></div>
+    <div id="steps"></div>
+    <div id="note">⏳ O tempo de cada etapa<br>varia de acordo com cada caso</div>
+    <div id="cta"><img class="big" src="emoji/1f601.png"><div class="x a">Volte a sorrir<br>com <span>confiança</span></div><div id="bdg"></div><div id="wa"></div><div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div></div>
+  </div>
+  <canvas id="grain" width="540" height="960" style="mix-blend-mode:overlay"></canvas>
+  <div id="flash"></div>
+</div>
+<script src="lib/anim.js"></script>
+<script>
+const B=60/95, b=n=>n*B, DUR=b(40)+0.8;
+document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
+$('#stage').insertAdjacentHTML('beforeend',brandHTML());
+$('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML();
+const toothD=cx=>`M${cx-70} 360 C${cx-75} 300 ${cx-70} 210 ${cx-40} 200 C${cx-20} 195 ${cx-10} 210 ${cx} 210 C${cx+10} 210 ${cx+20} 195 ${cx+40} 200 C${cx+70} 210 ${cx+75} 300 ${cx+70} 360 L${cx+50} 600 C${cx+45} 640 ${cx+20} 640 ${cx+15} 600 L${cx} 480 L${cx-15} 600 C${cx-20} 640 ${cx-45} 640 ${cx-50} 600 Z`;
+const crownD=cx=>`M${cx-68} 362 C${cx-74} 300 ${cx-68} 214 ${cx-40} 204 C${cx-20} 198 ${cx-10} 213 ${cx} 213 C${cx+10} 213 ${cx+20} 198 ${cx+40} 204 C${cx+68} 214 ${cx+74} 300 ${cx+68} 362 Q${cx} 380 ${cx-68} 362 Z`;
+$('#tl').setAttribute('d',toothD(170)); $('#tr').setAttribute('d',toothD(630)); $('#crp').setAttribute('d',crownD(400));
+const STEPS=[
+  {e:'🩻',t:'Avaliação e<br>planejamento',d:'Exame clínico e de imagem para planejar cada detalhe.'},
+  {e:'🔩',t:'Instalação<br>do implante',d:'Um pino de titânio é colocado no osso e faz o papel da raiz.'},
+  {e:'👑',t:'Coroa sobre<br>o implante',d:'O dente novo é fixado: firme, bonito e natural 😁'},
+];
+const SS=i=>5+8*i;
+$('#steps').innerHTML=STEPS.map((s,i)=>`<div class="step" id="st${i}"><div class="k">PASSO 0${i+1} ${s.e}<div class="bar"></div></div><div class="x t">${s.t}</div><div class="d">${s.d}</div></div>`).join('');
+emojify($('#stage'));
+$$('.draw').forEach(p=>{const L=p.getTotalLength();p.dataset.len=L;p.style.strokeDasharray=L;p.style.strokeDashoffset=L;});
+const grain=makeGrain($('#grain'),61);
+const svgEl=id=>document.getElementById(id);
+function show(id,o,tx=0,ty=0,s=1,r=0,ox=400,oy=400){const g=svgEl(id);g.style.opacity=o;g.setAttribute('transform',`translate(${tx} ${ty}) rotate(${r} ${ox} ${oy}) translate(${ox} ${oy}) scale(${s}) translate(${-ox} ${-oy})`);}
+
+function render(t){
+  const bt=t/B; grain(t);
+  $('#cam').style.transform=`scale(${1+pulses(t,[0,b(5),b(13),b(21),b(31.5)],0.25,0.03)})`;
+  $('#flash').style.opacity=pulses(t,[b(21+4.3)],0.3,0.35);
+
+  // neighbour teeth draw in, then fill
+  $$('.tooth').forEach((p,i)=>{p.style.strokeDashoffset=p.dataset.len*(1-eInOut(prog(t,0.1+i*0.15,1.2)));p.style.fillOpacity=prog(t,1.2,0.6);});
+  show('bone',eOut(prog(t,0,0.6))); show('gum',eOut(prog(t,0.2,0.6)));
+  // gap marker blinks until the plan starts
+  const gapOn=bt<SS(0)+1;svgEl('gap').style.opacity=gapOn?(t<0.8?0:0.55+0.45*Math.sin(t*8)):eOut(1-prog(bt,SS(0)+1,1));
+  // step 1: scan sweep + target lock
+  const sc=prog(bt,SS(0)+0.5,3);svgEl('scan').style.opacity=sc>0&&sc<1?1:0;svgEl('scan').setAttribute('transform',`translate(0 ${lerp(120,700,eInOut(sc))})`);
+  const tg=prog(bt,SS(0)+3.5,0.8);show('target',bt<SS(1)?eOut(tg):1-prog(bt,SS(1),0.6),0,0,lerp(1.6,1,eBack(tg)),bt*20,400,500);
+  // step 2: implant screws in from above
+  const im=prog(bt,SS(1)+0.8,2.6);
+  show('implant',im>0?1:0,0,lerp(-520,0,eOut(im)),1,(1-eOut(im))*0,400,520);
+  svgEl('implant').querySelectorAll('path')[1].style.transform=`translateY(${(Math.sin(bt*Math.PI*2)*6)*(1-im)}px)`;
+  show('callImp',eOut(prog(bt,SS(1)+3.8,0.8)));
+  if(bt>=SS(2))show('callImp',1-prog(bt,SS(2),0.5));
+  // step 3: abutment, then crown drops on
+  show('abut',eOut(prog(bt,SS(2)+0.5,0.6)),0,lerp(-80,0,eOut(prog(bt,SS(2)+0.5,0.6))));
+  const cr=prog(bt,SS(2)+1.4,1.6);
+  show('crown',cr>0?1:0,0,lerp(-420,0,eBack(cr)));
+  show('callCr',eOut(prog(bt,SS(2)+3.6,0.8)));
+  const sp=prog(bt,SS(2)+3.2,0.6);svgEl('spk').style.opacity=sp>0?1:0;
+  svgEl('spk').querySelectorAll('path').forEach((p,i)=>{p.style.transformBox='fill-box';p.style.transformOrigin='50% 50%';p.style.transform=`scale(${eBack(clamp(sp*1.3-i*.3))*(1+0.15*Math.sin(t*10+i))})`;});
+  // illustration exits into CTA
+  const ix=eIn(prog(bt,31.2,0.6));tf($('#ill'),{o:1-ix,y:-ix*200,s:1-ix*0.1});
+
+  // hook text
+  const hk=$('#hookTxt');
+  if(vis(hk,t,0,b(5))){slam($('#hookTxt .a'),t,0.2);upIn($('#hookTxt .b'),t,b(1.5),0.4,40);
+    const x=eIn(prog(t,b(4.5),b(0.5)));if(x>0)tf(hk,{o:1-x,y:-x*60});}
+  // steps
+  STEPS.forEach((s,i)=>{
+    const el=$('#st'+i);if(!vis(el,t,b(SS(i)),b(SS(i)+8)))return;
+    upIn(el.querySelector('.k'),t,b(SS(i)),0.35,30);
+    el.querySelector('.bar').style.transform=`scaleX(${eExpo(prog(t,b(SS(i))+0.2,0.6))})`;
+    slam(el.querySelector('.t'),t,b(SS(i)+0.5),1.5);
+    upIn(el.querySelector('.d'),t,b(SS(i)+1.5),0.45,40);
+    const x=eIn(prog(t,b(SS(i)+7.5),b(0.5)));if(x>0)tf(el,{o:1-x,x:-x*200});else tf(el,{});
+  });
+  // note
+  const nt=$('#note');if(vis(nt,t,b(29),b(31.5))){upIn(nt,t,b(29),0.4,40);const x=eIn(prog(t,b(31),b(0.5)));if(x>0)nt.style.opacity=1-x;}
+  // CTA
+  const ct=$('#cta');
+  if(vis(ct,t,b(31.5),DUR+1)){
+    const bg=$('#cta .big');pop(bg,t,b(31.5),0.45);if(t>b(32))bg.style.transform+=` rotate(${Math.sin(t*4)*5}deg)`;
+    slam($('#cta .a'),t,b(32),1.6); pop($('#cta .badge'),t,b(33.5),0.45); pop($('#cta .wa'),t,b(34.5),0.45);
+    waBeat($('#cta .wa'),bt,36.5); upIn($('#cta .meta'),t,b(35.5),0.4,30);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>

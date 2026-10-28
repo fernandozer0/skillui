@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Erros na escovação</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  :root{--mint:#d7f5ec;--ink:#0b4d45;--red:#ff4757;--green:#12b886}
+  #stage{background:var(--mint);color:var(--ink)}
+  #bubbles{position:absolute;inset:0;pointer-events:none}
+  .bb{position:absolute;border-radius:50%;border:4px solid rgba(11,77,69,.10);background:rgba(255,255,255,.35)}
+  #panel{position:absolute;inset:0}
+  #brand{color:var(--ink)}
+  #hook{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center}
+  #hook .warn{width:250px;height:250px;margin-bottom:30px}
+  #hook .a{font-size:100px}
+  #hook .err{display:inline-block;font-size:190px;color:#fff;background:var(--red);padding:10px 40px 22px;margin-top:16px;border-radius:24px}
+  #hook .c{font-family:'Inter',sans-serif;font-size:56px;font-weight:700;margin-top:46px}
+  .er{position:absolute;inset:0}
+  .er .k{position:absolute;top:330px;left:0;right:0;text-align:center;font-size:36px;font-weight:800;letter-spacing:10px}
+  .er .icw{position:absolute;left:50%;top:420px;width:400px;height:400px;margin-left:-200px}
+  .er .icw .big{width:400px;height:400px}
+  .er .mark{position:absolute;right:-40px;bottom:-10px;width:170px;height:170px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 30px rgba(0,0,0,.18);border:8px solid #fff}
+  .er .mark img{width:96px;height:96px}
+  .er .t{position:absolute;left:60px;right:60px;top:900px;text-align:center;font-size:104px}
+  .er .fix{position:absolute;left:70px;right:70px;top:1150px;border-radius:44px;background:#fff;padding:36px 40px;box-shadow:0 20px 50px rgba(11,77,69,.15)}
+  .er .fix .h{font-size:34px;font-weight:800;letter-spacing:6px;color:var(--green)}
+  .er .fix .d{font-family:'Inter',sans-serif;font-size:50px;font-weight:600;line-height:1.28;margin-top:10px}
+  #cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center}
+  #cta .big{width:220px;height:220px;margin-bottom:20px}
+  #cta .a{font-size:90px}
+  #cta .a span{color:var(--green)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="panel"></div><div id="bubbles"></div>
+  <div id="cam">
+    <div id="hook"><img class="warn" src="emoji/26a0.png"><div class="x a">Você escova<br>os dentes</div><div class="x err">errado?</div><div class="c">4 erros muito comuns 👇</div></div>
+    <div id="errs"></div>
+    <div id="cta"><img class="big" src="emoji/2728.png"><div class="x a">Sorriso saudável<br>começa em casa<br><span>e continua aqui</span></div><div id="bdg"></div><div id="wa"></div><div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div></div>
+  </div>
+  <canvas id="grain" width="540" height="960" style="mix-blend-mode:multiply;opacity:.06"></canvas>
+  <div id="flash"></div>
+</div>
+<script src="lib/anim.js"></script>
+<script>
+const B=0.48, b=n=>n*B, DUR=b(42)+0.8;   // 125 BPM
+document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
+$('#stage').insertAdjacentHTML('beforeend',brandHTML());
+$('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML();
+const ERRS=[
+  {e:'1f4aa',t:'Escovar com<br>muita força',d:'Use escova macia e movimentos suaves.'},
+  {e:'1f445',t:'Esquecer<br>da língua',d:'Escove a língua: ela acumula bactérias e causa mau hálito.'},
+  {e:'1f9f5',t:'Pular o<br>fio dental',d:'Use todo dia: a escova não alcança entre os dentes.'},
+  {e:'1faa5',t:'Usar escova<br>velha',d:'Troque a cada 3 meses, ou antes se as cerdas abrirem.'},
+];
+const ES=i=>5+7*i;
+$('#errs').innerHTML=ERRS.map((s,i)=>`<div class="er" id="er${i}"><div class="k">ERRO Nº ${i+1}</div>
+  <div class="icw"><img class="big" src="emoji/${s.e}.png"><div class="mark"><img class="mx" src="emoji/274c.png"><img class="mv" src="emoji/2705.png"></div></div>
+  <div class="x t">${s.t}</div><div class="fix"><div class="h">✅ FAÇA ASSIM</div><div class="d">${s.d}</div></div></div>`).join('');
+emojify($('#stage'));
+fitText($('#hook .err'),860);
+const R=rng(5);const bubs=[];
+for(let i=0;i<14;i++){const d=document.createElement('div');d.className='bb';const s=30+R()*110;d.style.width=d.style.height=s+'px';$('#bubbles').appendChild(d);
+  bubs.push({el:d,x:R()*1080,y:R()*1920,sp:30+R()*70,ph:R()*6});}
+const grain=makeGrain($('#grain'),81,true);
+const HITS=[0,1,2,...ERRS.flatMap((_,i)=>[ES(i),ES(i)+3.5]),33];
+
+function render(t){
+  const bt=t/B; grain(t);
+  bubs.forEach(q=>{const y=((q.y-q.sp*t)%2100+2100)%2100-100;q.el.style.transform=`translate(${q.x+Math.sin(t+q.ph)*20}px,${y}px)`;});
+  $('#cam').style.transform=`scale(${1+pulses(t,HITS.map(b),0.22,0.035)})`;
+  $('#flash').style.opacity=pulses(t,ERRS.map((_,i)=>b(ES(i)+3.5)),0.25,0.4);
+  // background: red while showing the mistake, green once fixed
+  let col='var(--mint)';
+  ERRS.forEach((_,i)=>{const s=ES(i);if(bt>=s&&bt<s+7)col=bt<s+3.5?'#ffe1e3':'#d6f7e7';});
+  if(bt<5)col='#ffe9d6';
+  $('#panel').style.background=col;
+
+  const hk=$('#hook');
+  if(vis(hk,t,0,b(5))){
+    const w=$('#hook .warn');pop(w,t,0,0.4);w.style.transform+=` scale(${1+0.06*Math.max(0,Math.sin(bt*Math.PI))})`;
+    slam($('#hook .a'),t,b(1),1.6);
+    const er=$('#hook .err');stamp(er,t,b(2),-4,0.3);if(t>b(2.4))er.style.transform+=` translateX(${Math.sin(t*50)*6*Math.max(0,1-prog(t,b(2.4),0.5))}px)`;
+    upIn($('#hook .c'),t,b(3),0.4,40);
+    const x=eIn(prog(t,b(4.5),b(0.5)));if(x>0)tf(hk,{o:1-x,s:1+x*0.4,bl:x*12});
+  }
+  ERRS.forEach((s,i)=>{
+    const el=$('#er'+i), st=ES(i);if(!vis(el,t,b(st),b(st+7)))return;
+    upIn(el.querySelector('.k'),t,b(st),0.3,30);
+    el.querySelector('.k').style.color=bt<st+3.5?'var(--red)':'var(--green)';
+    const ic=el.querySelector('.icw');pop(ic,t,b(st),0.45);
+    // shake while wrong
+    if(bt>st+0.6&&bt<st+3.5)ic.style.transform+=` rotate(${Math.sin(t*30)*4}deg)`;
+    const mx=el.querySelector('.mx'),mv=el.querySelector('.mv'),mk=el.querySelector('.mark');
+    const fixed=bt>=st+3.5;
+    mx.style.display=fixed?'none':'';mv.style.display=fixed?'':'none';
+    mk.style.background=fixed?'var(--green)':'var(--red)';
+    const pm=fixed?prog(t,b(st+3.5),0.35):prog(t,b(st+0.6),0.35);
+    mk.style.transform=`scale(${eBack(pm)}) rotate(${fixed?lerp(-90,0,eOut(pm)):0}deg)`;
+    const tt=el.querySelector('.t');slam(tt,t,b(st+1),1.5);
+    tt.style.color=fixed?'#9ab8b2':'var(--ink)';tt.style.textDecoration=fixed?'line-through':'none';tt.style.textDecorationThickness='8px';
+    const fx=el.querySelector('.fix');const pf=spring(prog(t,b(st+3.7),0.8));tf(fx,{o:clamp((t-b(st+3.7))/0.1),y:lerp(300,0,pf)});if(t<b(st+3.7))fx.style.opacity=0;
+    const x=eIn(prog(t,b(st+6.6),b(0.4)));if(x>0)tf(el,{o:1-x,x:-x*300});else el.style.transform='';
+  });
+  const ct=$('#cta');
+  if(vis(ct,t,b(33),DUR+1)){
+    const bg=$('#cta .big');pop(bg,t,b(33),0.45);bg.style.transform+=` rotate(${Math.sin(t*3)*8}deg)`;
+    slam($('#cta .a'),t,b(33.4),1.5); pop($('#cta .badge'),t,b(35),0.45); pop($('#cta .wa'),t,b(36),0.45);
+    waBeat($('#cta .wa'),bt,38); upIn($('#cta .meta'),t,b(37),0.4,30);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>

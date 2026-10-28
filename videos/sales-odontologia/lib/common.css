@@ -1,0 +1,24 @@
+/* Shared pieces for reel6+ : reset, Apple emoji images, brand strip, logo badge, WhatsApp pill */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:'Montserrat',sans-serif}
+img.em{height:1.1em;width:1.1em;vertical-align:-.2em;display:inline-block}
+.x{font-weight:900;text-transform:uppercase;letter-spacing:-3px;line-height:.95}
+.inter{font-family:'Inter',sans-serif}
+#cam{position:absolute;inset:0;transform-origin:50% 45%}
+#grain{position:absolute;inset:0;width:1080px;height:1920px;opacity:.07;pointer-events:none}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#brand{position:absolute;top:226px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:14px;font-size:28px;font-weight:800;letter-spacing:9px}
+#brand svg{width:40px;height:28px}
+.badge{width:170px;height:170px;border-radius:50%;margin:46px auto 0;position:relative;
+  background:radial-gradient(circle at 42% 35%,#7a7a7a 0%,#4a4a4b 45%,#262628 100%);border:6px solid #c9a14d;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.badge svg{width:52px;height:34px}
+.badge .n{font-family:'Cinzel',serif;font-size:38px;color:#f2efe9;letter-spacing:3px;padding-left:3px;line-height:1.1}
+.badge .s{font-family:'Cinzel',serif;font-size:9px;color:#e4dccb;letter-spacing:3px;padding-left:3px}
+.wa{margin-top:40px;display:flex;align-items:center;gap:24px;background:linear-gradient(180deg,#34e07b,#1fb457);color:#fff;
+  padding:26px 54px 26px 30px;border-radius:90px;box-shadow:0 20px 60px rgba(37,211,102,.35);text-align:left;font-family:'Montserrat',sans-serif}
+.wa .ic{width:96px;height:96px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+.wa .t1{font-size:32px;font-weight:600}
+.wa .t2{font-size:62px;font-weight:900}
+.meta{margin-top:30px;font-size:40px;font-weight:700}
