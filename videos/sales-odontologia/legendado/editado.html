@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mitos e Verdades – editado</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../lib/common.css">
+<style>
+  @font-face{font-family:'Montserrat';font-weight:400 900;src:url(../fonts/Montserrat-900.woff2) format('woff2')}
+  @font-face{font-family:'Cinzel';font-weight:500 700;src:url(../fonts/Cinzel-700.woff2) format('woff2')}
+  :root{--yl:#ffd400;--red:#ff3b3b;--green:#1fc36b}
+  #stage{background:#000;color:#fff}
+  #vid{position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover;transform-origin:50% 33%}
+  #shade{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(0,0,0,0) 40%,rgba(0,0,0,.55) 100%)}
+  #qdim{position:absolute;inset:0;background:rgba(10,8,30,.35)}
+  /* header */
+  #hdr{position:absolute;top:220px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:14px}
+  #hdr .pill{font-size:30px;font-weight:900;letter-spacing:4px;background:rgba(0,0,0,.55);padding:12px 28px;border-radius:40px;border:2px solid rgba(255,255,255,.25)}
+  #hdr .pill span{color:var(--yl)}
+  #segs{display:flex;gap:10px}
+  #segs i{width:70px;height:10px;border-radius:8px;background:rgba(255,255,255,.3)}
+  /* intro */
+  #intro{position:absolute;left:0;right:0;top:640px;text-align:center}
+  #intro .a{font-size:150px;color:var(--yl);-webkit-text-stroke:10px #000;paint-order:stroke fill;text-shadow:0 10px 30px rgba(0,0,0,.5)}
+  #intro .b{font-size:130px;-webkit-text-stroke:10px #000;paint-order:stroke fill;text-shadow:0 10px 30px rgba(0,0,0,.5)}
+  #intro .c{font-size:84px;margin-top:10px;-webkit-text-stroke:8px #000;paint-order:stroke fill}
+  #intro .c img{width:110px;height:110px;vertical-align:-24px}
+  /* question badge */
+  #qb{position:absolute;top:360px;left:0;right:0;display:flex;justify-content:center}
+  #qb .p{display:flex;align-items:center;gap:16px;font-size:44px;font-weight:900;letter-spacing:4px;background:var(--yl);color:#111;padding:16px 36px;border-radius:50px;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+  #qb img{width:64px;height:64px}
+  #think{position:absolute;right:90px;top:560px;width:200px;height:200px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.4))}
+  /* stamp */
+  #stamp{position:absolute;left:50%;top:1060px;font-size:170px;font-weight:900;letter-spacing:-2px;padding:6px 50px 14px;border:16px solid;border-radius:36px;
+    background:rgba(255,255,255,.95);white-space:nowrap;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  #stamp img{width:150px;height:150px;vertical-align:-24px;margin-left:16px}
+  /* example cards */
+  .ex{position:absolute;left:190px;width:700px;top:860px;border-radius:44px;background:rgba(255,255,255,.96);color:#14213d;box-shadow:0 24px 60px rgba(0,0,0,.4);
+    padding:30px 34px 34px;text-align:center;transform-origin:50% 100%}
+  .ex .lb{font-size:48px;font-weight:900;letter-spacing:-1px;text-transform:uppercase;line-height:1.05;margin-top:14px}
+  .ex .sb{font-family:'Inter',sans-serif;font-size:34px;font-weight:600;color:#55607a;margin-top:6px}
+  .ex .row{display:flex;justify-content:center;gap:16px}
+  .ex .row img{width:120px;height:120px}
+  .ex svg{width:620px;height:282px;overflow:visible}
+  .meter{display:flex;justify-content:center;gap:70px;align-items:flex-end;height:300px}
+  .meter .col{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:34px;font-weight:900}
+  .meter .bar{width:130px;border-radius:24px 24px 10px 10px;transform-origin:50% 100%}
+  .meter img{width:96px;height:96px}
+  .big2{display:flex;justify-content:center;align-items:center;gap:30px;height:240px}
+  .big2 img{width:200px;height:200px}
+  .big2 .plus{font-size:90px;font-weight:900;color:#c9993c}
+  .ban{position:relative;width:200px;height:200px}
+  .ban img{position:absolute;inset:0;width:200px;height:200px}
+  /* link-in-bio card */
+  #exLink{left:90px;width:900px}
+  #exLink .wa svg{width:62px;height:62px}
+  #exLink .prof{display:flex;align-items:center;gap:26px;text-align:left}
+  #exLink .badge{margin:0;width:150px;height:150px}
+  #exLink .badge svg{width:46px;height:30px}
+  #exLink .badge .n{font-size:33px}
+  #exLink .h{font-size:44px;font-weight:900}
+  #exLink .lnk{margin-top:10px;display:inline-flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:36px;font-weight:700;color:#0a66ff}
+  #exLink .lnk img{width:52px;height:52px}
+  #exLink .wa{margin:26px auto 0;justify-content:center}
+  #tap{position:absolute;width:90px;height:90px;border-radius:50%;border:5px solid #0a66ff;background:rgba(10,102,255,.2)}
+  /* captions */
+  #cap{position:absolute;left:60px;right:60px;top:1400px;text-align:center;font-family:'Inter',sans-serif;font-weight:900;font-size:92px;line-height:1.05;
+    -webkit-text-stroke:16px #000;paint-order:stroke fill;text-shadow:0 6px 0 rgba(0,0,0,.6);letter-spacing:-1px}
+  /* end card */
+  #end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center;background:rgba(8,8,12,.55)}
+  #end .a{font-size:96px;-webkit-text-stroke:8px #000;paint-order:stroke fill}
+  #end .a span{color:var(--yl)}
+  #end .meta{color:#fff}
+</style>
+</head>
+<body>
+<div id="stage">
+  <img id="vid" src="frames/00001.jpg">
+  <div id="shade"></div><div id="qdim"></div>
+  <div id="cam">
+    <div id="intro"><div class="x a">Mitos &amp;</div><div class="x b">Verdades</div><div class="x c">sobre implante <img src="../emoji/1f9b7.png"></div></div>
+    <div id="qb"><div class="p"><img src="../emoji/2753.png"><span id="qbt">PERGUNTA 1/4</span></div></div>
+    <img id="think" src="../emoji/1f914.png">
+    <div id="stamp"></div>
+    <div id="cards"></div>
+    <div id="cap"></div>
+    <div id="end"><div id="bdg"></div><div class="x a" style="margin-top:30px">Agende sua<br><span>avaliação</span></div><div id="wa"></div><div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div></div>
+  </div>
+  <div id="hdr"><div class="pill">🦷 MITOS &amp; VERDADES · <span>IMPLANTE</span></div><div id="segs"><i></i><i></i><i></i><i></i></div></div>
+  <div id="flash"></div>
+</div>
+<script>window.EMOJI_DIR='../emoji';</script>
+<script src="../lib/anim.js"></script>
+<script src="caps.js"></script>
+<script>
+const SRC_DUR=50.233, FPS=30, DUR=SRC_DUR+2.6;
+document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
+$('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML();
+
+// question windows = blurred spans in the footage (+ the closing question, not blurred)
+const QWIN=[[4.17,6.93,'PERGUNTA 1/4'],[14.6,16.47,'PERGUNTA 2/4'],[22.0,25.13,'PERGUNTA 3/4'],[33.97,35.6,'PERGUNTA 4/4'],[43.8,47.3,'COMO AGENDAR?']];
+const STAMPS=[[6.94,'MITO','❌',false],[16.5,'MITO','❌',false],[25.28,'VERDADE','✅',true],[35.42,'MITO','❌',false]];
+const ANSWERS=[[6.94,14.8],[16.5,21.75],[25.28,34.1],[35.42,43.4],[47.3,50.2]];
+
+/* ---------- illustration helpers (cross-section: gum, bone, teeth, implants) ---------- */
+const TOOTH=cx=>`M${cx-48} 150 C${cx-52} 110 ${cx-48} 52 ${cx-28} 46 C${cx-14} 42 ${cx-6} 52 ${cx} 52 C${cx+6} 52 ${cx+14} 42 ${cx+28} 46 C${cx+48} 52 ${cx+52} 110 ${cx+48} 150 L${cx+34} 262 C${cx+30} 284 ${cx+14} 284 ${cx+10} 262 L${cx} 200 L${cx-10} 262 C${cx-14} 284 ${cx-30} 284 ${cx-34} 262 Z`;
+const CROWN=cx=>`M${cx-46} 152 C${cx-50} 110 ${cx-46} 54 ${cx-28} 48 C${cx-14} 44 ${cx-6} 54 ${cx} 54 C${cx+6} 54 ${cx+14} 44 ${cx+28} 48 C${cx+46} 54 ${cx+50} 110 ${cx+46} 152 Q${cx} 164 ${cx-46} 152 Z`;
+const IMPL=cx=>`<g class="impl"><path d="${CROWN(cx)}" fill="#fff" stroke="#9fb3c8" stroke-width="4"/>
+  <path d="M${cx-14} 150 L${cx+14} 150 L${cx+16} 172 L${cx-16} 172 Z" fill="#c9d6e3"/>
+  <path d="M${cx-22} 172 L${cx+22} 172 L${cx+14} 268 Q${cx} 284 ${cx-14} 268 Z" fill="#b8c7d6" stroke="#8aa0b6" stroke-width="3"/>
+  <path d="M${cx-24} 190 L${cx+24} 185 M${cx-22} 210 L${cx+22} 205 M${cx-20} 230 L${cx+20} 225 M${cx-17} 250 L${cx+17} 245" stroke="#7a8fa5" stroke-width="5" stroke-linecap="round"/></g>`;
+function scene(extra=''){return `<svg viewBox="0 0 660 300">
+  <rect x="10" y="168" width="640" height="128" rx="18" fill="#f3e3c8" stroke="#d9c29a" stroke-width="3"/>
+  <path d="M10 150 C 90 136 170 136 230 150 C 280 162 380 162 430 150 C 490 136 570 136 650 150 L650 176 L10 176 Z" fill="#ff9aa8" stroke="#e26f80" stroke-width="3"/>
+  ${extra}</svg>`;}
+const toothEl=(cx,cls)=>`<path class="${cls}" d="${TOOTH(cx)}" fill="#fff" stroke="#c5ced8" stroke-width="4"/>`;
+
+const CARDS=[
+  {id:'exAge',a:7.75,z:9.6,html:`<div class="row"><img src="../emoji/1f467.png"><img src="../emoji/1f9d1.png"><img src="../emoji/1f469.png"><img src="../emoji/1f474.png"><img src="../emoji/1f475.png"></div><div class="lb">Qualquer idade ✅</div>`},
+  {id:'exTooth',a:10.9,z:14.8,html:scene(toothEl(130,'tL')+toothEl(330,'tM')+toothEl(530,'tR')+`<g class="i1">${IMPL(330)}</g><g class="i2">${IMPL(530)}</g>`)+`<div class="lb" id="toothLb">Perdeu um dente?</div>`},
+  {id:'exPain',a:17.1,z:19.9,html:`<div class="meter"><div class="col"><img src="../emoji/1f60c.png"><div class="bar b1" style="height:70px;background:#1fc36b"></div>IMPLANTE</div><div class="col"><img src="../emoji/1f623.png"><div class="bar b2" style="height:190px;background:#ff3b3b"></div>EXTRAÇÃO</div></div><div class="lb">Muitas vezes dói menos</div>`},
+  {id:'exPat',a:19.9,z:21.8,html:`<div class="big2"><img src="../emoji/1f5e3.png"><img src="../emoji/1f4ac.png"><img src="../emoji/1f44d.png"></div><div class="lb">Relato de muitos pacientes</div>`},
+  {id:'exBone',a:26.0,z:34.0,html:scene(toothEl(130,'tL')+toothEl(530,'tR')+`<path class="dip" d="" fill="#ffffff" stroke="#e26f80" stroke-width="3"/><line x1="250" y1="176" x2="410" y2="176" stroke="#b7882e" stroke-width="3" stroke-dasharray="10 8" class="lvl"/><g class="graft"></g><g class="i1">${IMPL(330)}</g>`)+`<div class="lb" id="boneLb">⚠️ Perda óssea</div><div class="sb" id="boneSb">quando o implante demora</div>`},
+  {id:'exCav',a:36.1,z:37.8,html:`<div class="big2"><svg viewBox="0 0 200 300" style="width:170px;height:250px">${IMPL(100)}</svg><div class="ban"><img src="../emoji/1f9a0.png"><img src="../emoji/1f6ab.png"></div></div><div class="lb">Implante não tem cárie</div>`},
+  {id:'exPeri',a:37.8,z:39.9,html:scene(toothEl(130,'tL')+toothEl(530,'tR')+`<ellipse class="infl" cx="330" cy="168" rx="80" ry="34" fill="rgba(255,40,40,.55)"/><g class="i1">${IMPL(330)}</g>`)+`<div class="lb">Peri-implantite</div><div class="sb">inflamação ao redor do implante 🔥</div>`},
+  {id:'exClean',a:39.9,z:43.45,html:`<div class="big2"><img src="../emoji/1faa5.png"><div class="plus">+</div><img src="../emoji/1f4c5.png"></div><div class="lb">Limpeza de 6 em 6 meses ✅</div>`},
+  {id:'exLink',a:47.3,z:50.15,html:`<div class="prof"><div id="lbdg"></div><div><div class="h">@salesodontologia_</div><div class="lnk">🔗 link na bio <img src="../emoji/1f446.png"></div></div></div><div id="lwa"></div>`},
+];
+$('#cards').innerHTML=CARDS.map(c=>`<div class="ex" id="${c.id}">${c.html}</div>`).join('');
+$('#lbdg').outerHTML=badgeHTML(); $('#lwa').outerHTML=waHTML();
+emojify($('#stage'));
+// graft particles
+const R=rng(4);let gp='';for(let i=0;i<40;i++)gp+=`<circle cx="${272+R()*116}" cy="${180+R()*62}" r="${4+R()*6}" fill="#e9c56b" stroke="#b7882e" stroke-width="2"/>`;
+$('#exBone .graft').innerHTML=gp;
+
+let curFrame=0;const vid=$('#vid');
+async function setFrame(t){
+  const f=Math.min(1507,Math.floor(Math.min(t,SRC_DUR-0.01)*FPS)+1);
+  if(f!==curFrame){curFrame=f;vid.src=`frames/${String(f).padStart(5,'0')}.jpg`;await vid.decode();}
+}
+const inWin=(t,w)=>w.find(([a,z])=>t>=a&&t<z);
+
+async function render(t){
+  await setFrame(t);
+  // camera: slow push during answers + punch on every stamp / question start
+  let push=0;ANSWERS.forEach(([a,z])=>{if(t>=a&&t<z)push=0.07*eInOut((t-a)/(z-a));});
+  const punch=pulses(t,[...STAMPS.map(s=>s[0]),...QWIN.map(q=>q[0]),0],0.3,0.06);
+  vid.style.transform=`scale(${1+push+punch})`;
+  vid.style.filter=t>SRC_DUR?`blur(${Math.min(18,(t-SRC_DUR)*30)}px)`:'none';
+  const qw=inWin(t,QWIN);
+  $('#qdim').style.opacity=qw&&qw[0]<40?1:0;
+  $('#flash').style.opacity=pulses(t,STAMPS.map(s=>s[0]),0.22,0.5);
+
+  // header + progress
+  const hdr=$('#hdr');hdr.style.opacity=t<3.2?0:(t>SRC_DUR?0:1);
+  const answered=STAMPS.filter(s=>t>=s[0]).length;
+  $$('#segs i').forEach((d,i)=>d.style.background=i<answered?'var(--yl)':(qw&&qw[2].endsWith(`${i+1}/4`)?'#fff':'rgba(255,255,255,.3)'));
+
+  // intro title
+  const it=$('#intro');
+  if(vis(it,t,0,3.4)){slam($('#intro .a'),t,0.05,1.8);slam($('#intro .b'),t,0.45,1.8);upIn($('#intro .c'),t,0.9,0.4,40);
+    const x=eIn(prog(t,2.9,0.5));if(x>0)tf(it,{o:1-x,s:1+x*0.4,bl:x*10});}
+
+  // question badge + thinking emoji
+  const qb=$('#qb'),th=$('#think');
+  if(qw){$('#qbt').textContent=qw[2];qb.style.display='';th.style.display='';
+    const p=prog(t,qw[0],0.4),out=eIn(prog(t,qw[1]-0.25,0.25));
+    tf(qb,{o:clamp(p*4)*(1-out),s:lerp(0.5,1,eBack(p)),y:-out*40});
+    const pe=prog(t,qw[0]+0.2,0.45);tf(th,{o:clamp(pe*4)*(1-out),s:t<qw[0]+0.2?0.001:lerp(0.3,1,eBack(pe)),r:Math.sin(t*6)*10,y:Math.sin(t*3)*10});
+  }else{qb.style.display='none';th.style.display='none';}
+
+  // MITO / VERDADE stamp
+  const st=$('#stamp');const sw=STAMPS.find(s=>t>=s[0]&&t<s[0]+0.85);
+  if(sw){st.style.display='';const [s0,txt,em,ok]=sw;
+    if(st.dataset.k!=s0){st.dataset.k=s0;st.innerHTML=`${txt}<img src="../emoji/${ok?'2705':'274c'}.png">`;}
+    st.style.color=st.style.borderColor=ok?'var(--green)':'var(--red)';
+    const p=prog(t,s0,0.3),out=eIn(prog(t,s0+0.6,0.25));
+    st.style.opacity=clamp(p*4)*(1-out);st.style.transform=`translate(-50%,-50%) scale(${lerp(2.4,1,eBack(p))*(1-out*0.3)}) rotate(${ok?-8:8}deg)`;
+  }else st.style.display='none';
+
+  // example cards
+  CARDS.forEach(c=>{
+    const el=$('#'+c.id);if(!vis(el,t,c.a,c.z))return;
+    const p=spring(prog(t,c.a,0.7)),out=eIn(prog(t,c.z-0.25,0.25));
+    tf(el,{o:clamp((t-c.a)/0.12)*(1-out),s:lerp(0.6,1,p)*(1-out*0.15),y:lerp(120,0,p),r:lerp(-6,0,p)});
+  });
+  // card-specific animation
+  if(t>=10.9&&t<14.8){
+    const e=$('#exTooth');
+    const fM=eIn(prog(t,11.0,0.5)),fR=eIn(prog(t,12.1,0.5));
+    e.querySelector('.tM').setAttribute('transform',`translate(0 ${fM*200})`);e.querySelector('.tM').style.opacity=1-fM;
+    e.querySelector('.tR').setAttribute('transform',`translate(0 ${fR*200})`);e.querySelector('.tR').style.opacity=1-fR;
+    const i1=spring(prog(t,13.4,0.7)),i2=spring(prog(t,13.6,0.7));
+    e.querySelector('.i1').setAttribute('transform',`translate(0 ${lerp(-260,0,i1)})`);e.querySelector('.i1').style.opacity=t>=13.4?1:0;
+    e.querySelector('.i2').setAttribute('transform',`translate(0 ${lerp(-260,0,i2)})`);e.querySelector('.i2').style.opacity=t>=13.6?1:0;
+    $('#toothLb').textContent=t<12.1?'Perdeu um dente?':(t<13.4?'Ou mais de um?':'Implante resolve ✅');
+    emojify($('#toothLb'));
+  }
+  if(t>=17.1&&t<19.9){const p=eBack(prog(t,17.4,0.6)),q=eBack(prog(t,17.7,0.7));
+    $('#exPain .b1').style.transform=`scaleY(${p})`;$('#exPain .b2').style.transform=`scaleY(${q})`;}
+  if(t>=19.9&&t<21.8){$$('#exPat img').forEach((im,i)=>pop(im,t,20.0+i*0.25,0.4));}
+  if(t>=26.0&&t<34.0){
+    const e=$('#exBone');
+    const loss=eInOut(prog(t,26.6,2.0)), regrow=eInOut(prog(t,30.5,1.4));
+    const d=60*loss*(1-regrow);
+    // lost bone shows as an empty dip below the original level (dashed line)
+    e.querySelector('.dip').setAttribute('d',`M250 150 L410 150 L410 176 C 370 ${176+d*1.3} 290 ${176+d*1.3} 250 176 Z`);
+    e.querySelector('.dip').style.opacity=d>1?1:0;
+    e.querySelector('.lvl').style.opacity=t<30.5?clamp(loss*2):1-regrow;
+    $$('#exBone .graft circle').forEach((c,i)=>{c.style.opacity=t>=30.5+i*0.02?1:0;});
+    const i1=spring(prog(t,32.2,0.7));e.querySelector('.i1').setAttribute('transform',`translate(0 ${lerp(-260,0,i1)})`);e.querySelector('.i1').style.opacity=t>=32.2?1:0;
+    const ok=t>=30.5;$('#boneLb').innerHTML=ok?'Enxerto ósseo ✅':'⚠️ Perda óssea';$('#boneSb').textContent=ok?'reconstrói o osso para o implante':'quando o implante demora';
+    emojify($('#boneLb'));
+  }
+  if(t>=36.1&&t<37.8){const b=$('#exCav .ban');const p=prog(t,36.4,0.4);b.querySelectorAll('img')[1].style.transform=`scale(${t<36.4?0:eBack(p)})`;}
+  if(t>=37.8&&t<39.9){$('#exPeri .infl').style.opacity=0.45+0.4*Math.sin(t*9);}
+  if(t>=39.9&&t<43.45){$$('#exClean .big2 > *').forEach((im,i)=>pop(im,t,40.0+i*0.25,0.4));}
+  if(t>=47.3&&t<50.15){pop($('#exLink .wa'),t,48.2,0.45);}
+
+  // captions (yellow = question, white = answer)
+  const cap=$('#cap');const c=CAPS.find(k=>t>=k.s&&t<k.e);
+  if(c&&t<SRC_DUR){cap.style.display='';if(cap.dataset.k!=c.s){cap.dataset.k=c.s;cap.textContent=c.t;}
+    cap.style.color=c.q?'var(--yl)':'#fff';const p=prog(t,c.s,0.09);cap.style.transform=`scale(${lerp(0.82,1,p)})`;
+  }else cap.style.display='none';
+
+  // end card
+  const en=$('#end');
+  if(vis(en,t,SRC_DUR-0.05,DUR+1)){const p=prog(t,SRC_DUR,0.4);en.style.opacity=eOut(p);
+    pop($('#end .badge'),t,SRC_DUR+0.1,0.45);slam($('#end .a'),t,SRC_DUR+0.35,1.5);pop($('#end .wa'),t,SRC_DUR+0.8,0.45);upIn($('#end .meta'),t,SRC_DUR+1.1,0.4,30);}
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>

@@ -39,7 +39,7 @@ function emojify(root) {
   nodes.forEach(n => {
     const span = document.createElement('span');
     span.innerHTML = n.nodeValue.replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(EMOJI_RE, m => `<img class="em" src="emoji/${emojiFile(m)}.png">`);
+      .replace(EMOJI_RE, m => `<img class="em" src="${window.EMOJI_DIR || "emoji"}/${emojiFile(m)}.png">`);
     n.replaceWith(...span.childNodes);
   });
 }
