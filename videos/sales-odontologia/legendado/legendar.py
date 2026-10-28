@@ -50,7 +50,14 @@ def chunks(words):
             cur = []
     if cur:
         out.append(cur)
-    return out
+    # don't leave a single dangling word on its own if it fits with the previous chunk
+    merged = []
+    for c in out:
+        if merged and len(c) == 1 and len(" ".join(merged[-1] + c)) <= MAX_CHARS + 8:
+            merged[-1] = merged[-1] + c
+        else:
+            merged.append(c)
+    return merged
 
 
 def ts(t):

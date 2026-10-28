@@ -64,8 +64,8 @@
   #exLink .wa{margin:26px auto 0;justify-content:center}
   #tap{position:absolute;width:90px;height:90px;border-radius:50%;border:5px solid #0a66ff;background:rgba(10,102,255,.2)}
   /* captions */
-  #cap{position:absolute;left:60px;right:60px;top:1500px;text-align:center;font-family:'Inter',sans-serif;font-weight:900;font-size:80px;line-height:1.05;
-    -webkit-text-stroke:16px #000;paint-order:stroke fill;text-shadow:0 6px 0 rgba(0,0,0,.6);letter-spacing:-1px}
+  #cap{position:absolute;left:220px;right:220px;top:1500px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:52px;line-height:1.24;
+    text-transform:uppercase;color:#fff;letter-spacing:0;text-shadow:0 2px 3px rgba(0,0,0,.85),0 0 10px rgba(0,0,0,.45)}
   /* end card */
   #end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center;background:rgba(8,8,12,.55)}
   #end .a{font-size:96px;-webkit-text-stroke:8px #000;paint-order:stroke fill}
@@ -220,7 +220,7 @@ async function render(t){
   // captions (yellow = question, white = answer)
   const cap=$('#cap');const c=CAPS.find(k=>t>=k.s&&t<k.e);
   if(c&&t<SRC_DUR){cap.style.display='';if(cap.dataset.k!=c.s){cap.dataset.k=c.s;cap.textContent=c.t;}
-    cap.style.color=c.q?'var(--yl)':'#fff';const p=prog(t,c.s,0.09);cap.style.transform=`scale(${lerp(0.82,1,p)})`;
+    cap.style.transform='none';
   }else cap.style.display='none';
 
   // end card
