@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – 5 Sinais</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root{--ink:#151515;--gold:#c9993c;--gold-l:#e9c56b;--wa:#25d366}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#141110;font-family:'Montserrat',sans-serif;color:var(--ink)}
+  img.em{height:1.1em;width:1.1em;vertical-align:-.2em;display:inline-block}
+  #grain{position:absolute;inset:0;width:1080px;height:1920px;opacity:.07;mix-blend-mode:overlay;pointer-events:none}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+  #cam{position:absolute;inset:0;transform-origin:50% 45%}
+  .x{font-weight:900;text-transform:uppercase;letter-spacing:-3px;line-height:.95}
+  #brand{position:absolute;top:226px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:14px;font-size:28px;font-weight:800;letter-spacing:9px}
+  #brand svg{width:40px;height:28px}
+
+  /* hook */
+  #hook{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center;color:#fff}
+  #glow{position:absolute;inset:0}
+  #hook .siren{width:300px;height:300px;margin-bottom:30px;position:relative}
+  #hook .five{font-size:250px;color:#fff}
+  #hook .five span{color:#ff4b4b}
+  #hook .l2{font-size:84px;margin-top:10px}
+  #hook .l3{font-size:112px;margin-top:8px;background:#ff4b4b;padding:10px 34px 18px;transform-origin:50% 50%}
+  #hook .l4{font-family:'Inter',sans-serif;font-size:48px;font-weight:700;margin-top:56px;color:#ffe2a8;letter-spacing:0}
+
+  /* signs */
+  .sg{position:absolute;inset:0}
+  .sg .num{position:absolute;left:60px;top:20px;font-size:620px;font-weight:900;line-height:.8;letter-spacing:-30px}
+  .sg .numwrap{position:absolute;left:0;top:330px;width:600px;height:540px;overflow:hidden}
+  .sg .emo{position:absolute;right:70px;top:420px;width:380px;height:380px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.18))}
+  .sg .t{position:absolute;left:70px;right:60px;top:960px;font-size:118px}
+  .sg .s{position:absolute;left:74px;right:60px;top:1210px;font-family:'Inter',sans-serif;font-size:52px;font-weight:600;line-height:1.25}
+  #dots{position:absolute;left:74px;top:1460px;display:flex;gap:18px}
+  #dots i{width:70px;height:16px;border-radius:10px;background:rgba(0,0,0,.14);overflow:hidden;position:relative}
+  #dots i b{position:absolute;inset:0;background:var(--ink);transform-origin:0 50%;transform:scaleX(0)}
+  #tag{position:absolute;right:60px;top:900px;font-size:30px;font-weight:800;letter-spacing:4px;padding:12px 24px;border-radius:30px;background:var(--ink);color:#fff}
+
+  /* recap + CTA */
+  #recap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center;color:#fff}
+  #recap .a{font-size:116px}
+  #recap .eyes{width:240px;height:240px;margin-bottom:30px}
+  #recap .b{font-size:96px;margin-top:40px;color:var(--gold-l)}
+  #cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center;color:#fff}
+  #cta .doc{width:250px;height:250px}
+  #cta .a{font-size:104px;margin-top:20px}
+  #cta .a span{color:var(--gold-l)}
+  .badge{width:170px;height:170px;border-radius:50%;margin:46px auto 0;position:relative;
+    background:radial-gradient(circle at 42% 35%,#7a7a7a 0%,#4a4a4b 45%,#262628 100%);border:6px solid #c9a14d;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 16px 40px rgba(0,0,0,.4)}
+  .badge svg{width:52px;height:34px}
+  .badge .n{font-family:'Cinzel',serif;font-size:38px;color:#f2efe9;letter-spacing:3px;padding-left:3px;line-height:1.1}
+  .badge .s{font-family:'Cinzel',serif;font-size:9px;color:#e4dccb;letter-spacing:3px;padding-left:3px}
+  #wa{margin-top:40px;display:flex;align-items:center;gap:24px;background:linear-gradient(180deg,#34e07b,#1fb457);color:#fff;
+    padding:26px 54px 26px 30px;border-radius:90px;box-shadow:0 20px 60px rgba(37,211,102,.35);text-align:left}
+  #wa .ic{width:96px;height:96px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+  #wa .t1{font-size:32px;font-weight:600}
+  #wa .t2{font-size:62px;font-weight:900}
+  #cta .meta{margin-top:30px;font-size:40px;font-weight:700}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d88f"/><stop offset="1" stop-color="#b7882e"/></linearGradient></defs></svg>
+  <div id="cam">
+    <div id="hook"><div id="glow"></div>
+      <img class="siren" src="emoji/1f6a8.png">
+      <div class="x five"><span>5</span> sinais</div>
+      <div class="x l2">de que você precisa</div>
+      <div class="x l3">ir ao dentista</div>
+      <div class="l4">O nº 1 é o mais ignorado 👀</div>
+    </div>
+    <div id="signs"></div>
+    <div id="dots"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    <div id="recap"><img class="eyes" src="emoji/1f440.png"><div class="x a">Se identificou<br>com algum?</div><div class="x b">Não espere doer ⏰</div></div>
+    <div id="cta">
+      <img class="doc" src="emoji/1f469-200d-2695.png">
+      <div class="x a">Agende sua<br><span>avaliação</span></div>
+      <div class="badge"><svg viewBox="0 0 150 100"><path fill="none" stroke="url(#gg)" stroke-width="13" stroke-linecap="round" id="tp"/></svg><div class="n">SALES</div><div class="s">ODONTOLOGIA</div></div>
+      <div id="wa"><div class="ic"><svg width="62" height="62" viewBox="0 0 32 32"><path fill="#25d366" id="wp"/></svg></div><div><div class="t1">Chame no WhatsApp</div><div class="t2">(41) 98414-4299</div></div></div>
+      <div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div>
+    </div>
+  </div>
+  <div id="brand"><svg viewBox="0 0 150 100"><path fill="none" stroke="url(#gg)" stroke-width="13" stroke-linecap="round" id="tp2"/></svg>SALES ODONTOLOGIA</div>
+  <canvas id="grain" width="540" height="960"></canvas>
+  <div id="flash"></div>
+</div>
+<script src="lib/anim.js"></script>
+<script>
+const B=60/128, b=n=>n*B, DUR=b(50)+0.8;
+const SIGNS=[
+  {n:5,e:'1fa78',t:'Gengiva<br>sangrando',s:'Ao escovar ou passar o fio dental 🪥',bg:'#ffd9de',fg:'#8a1c2b'},
+  {n:4,e:'1f976',t:'Sensibilidade',s:'Ao tomar algo gelado 🧊 ou quente ☕',bg:'#d6ebff',fg:'#0f4c81'},
+  {n:3,e:'1f62e-200d-1f4a8',t:'Mau hálito<br>constante',s:'Que não passa nem depois de escovar',bg:'#d6f5e3',fg:'#11643a'},
+  {n:2,e:'1f623',t:'Dor ao<br>mastigar',s:'Ou um incômodo que vai e volta em algum dente',bg:'#ffe3c9',fg:'#8a4511'},
+  {n:1,e:'1f4c5',t:'Mais de<br>6 meses',s:'Desde a sua última consulta. Prevenir é sempre melhor 😉',bg:'#f3d88f',fg:'#151515'},
+];
+const SS=i=>6+6*i;
+$('#tp').setAttribute('d',TOOTH_PATH);$('#tp2').setAttribute('d',TOOTH_PATH);$('#wp').setAttribute('d',WA_PATH);
+$('#signs').innerHTML=SIGNS.map((g,i)=>`
+  <div class="sg" id="sg${i}" style="background:${g.bg};color:${g.fg}">
+    <div class="numwrap"><div class="num">${g.n}</div></div>
+    <img class="emo" src="emoji/${g.e}.png">
+    <div id="tag${i}" class="tagx" style="position:absolute;right:60px;top:880px;font-size:30px;font-weight:800;letter-spacing:4px;padding:12px 24px;border-radius:30px;background:${g.fg};color:${g.bg}">SINAL Nº ${g.n}</div>
+    <div class="x t">${g.t}</div>
+    <div class="s">${g.s}</div>
+  </div>`).join('');
+// 😉 isn't downloaded — swap for 😊 which is
+$$('.s').forEach(el=>el.innerHTML=el.innerHTML.replace('😉','😊'));
+emojify($('#stage'));
+['#hook .five','#hook .l2','#hook .l3','#recap .b'].forEach(q=>fitText($(q),960));
+const grain=makeGrain($('#grain'),41);
+const HITS=[0,1,2,3,...SIGNS.map((_,i)=>SS(i)),36,38,40];
+
+function render(t){
+  const bt=t/B; grain(t);
+  $('#cam').style.transform=`scale(${1+pulses(t,HITS.map(b),0.22,0.04)+0.006*Math.max(0,Math.cos((bt%1)*Math.PI*2))})`;
+  $('#flash').style.opacity=pulses(t,[b(6),b(36)],0.25,0.6);
+  const inSigns=bt>=6&&bt<36;
+  $('#brand').style.color=inSigns?SIGNS[clamp(Math.floor((bt-6)/6),0,4)].fg:'#fff';
+
+  /* hook */
+  const hk=$('#hook');
+  if(vis(hk,t,0,b(6))){
+    const on=Math.floor(bt*2)%2===0;
+    $('#glow').style.background=`radial-gradient(circle at 50% 30%, rgba(255,60,60,${on?.45:.18}) 0%, rgba(255,60,60,0) 55%)`;
+    const si=$('#hook .siren');pop(si,t,0,0.35);si.style.transform+=` rotate(${Math.sin(t*20)*5}deg)`;
+    slam($('#hook .five'),t,b(1)); slam($('#hook .l2'),t,b(2),1.6); stamp($('#hook .l3'),t,b(3),-3,0.3);
+    upIn($('#hook .l4'),t,b(4),0.35,30);
+    const x=eIn(prog(t,b(5.5),b(0.5)));if(x>0)tf(hk,{s:1+x*0.6,o:1-x,bl:x*16});
+  }
+
+  /* signs */
+  const dots=$('#dots');dots.style.display=inSigns?'':'none';
+  SIGNS.forEach((g,i)=>{
+    const s=SS(i), el=$('#sg'+i);
+    if(!vis(el,t,b(s),b(s+6)))return;
+    // circular wipe in from the emoji
+    const w=eExpo(prog(t,b(s),0.4));
+    el.style.clipPath=i===0?`circle(${w*2300}px at 50% 50%)`:`circle(${w*2300}px at 76% 32%)`;
+    // slot-roll number
+    const pn=prog(t,b(s),0.45);
+    tf(el.querySelector('.num'),{y:lerp(560,0,eBack(pn))});
+    const em=el.querySelector('.emo');const pe=prog(t,b(s+0.4),0.5);
+    tf(em,{o:clamp(pe*4),s:t<b(s+0.4)?0.001:lerp(0.2,1,eBack(pe)),y:Math.sin(t*4)*14,r:Math.sin(t*3)*5});
+    tf(el.querySelector('.tagx'),{o:eOut(prog(t,b(s+0.8),0.3)),x:lerp(80,0,eOut(prog(t,b(s+0.8),0.3)))});
+    slam(el.querySelector('.t'),t,b(s+1),1.5);
+    upIn(el.querySelector('.s'),t,b(s+2),0.4,40);
+    dots.style.color=g.fg;
+    $$('#dots b').forEach((d,k)=>{d.style.background=g.fg;d.style.transform=`scaleX(${k<i?1:(k===i?prog(t,b(s),b(6)):0)})`;});
+  });
+
+  /* recap */
+  const rc=$('#recap');
+  if(vis(rc,t,b(36),b(40))){
+    const ey=$('#recap .eyes');pop(ey,t,b(36),0.4);ey.style.transform+=` translateX(${Math.sin(t*6)*16}px)`;
+    slam($('#recap .a'),t,b(36.3));
+    stamp($('#recap .b'),t,b(38),-3,0.3);
+    const x=eIn(prog(t,b(39.6),b(0.4)));if(x>0)tf(rc,{y:-x*500,o:1-x});
+  }
+  $('#stage').style.background=bt>=36?'#141110':'#141110';
+
+  /* CTA */
+  const ct=$('#cta');
+  if(vis(ct,t,b(40),DUR+1)){
+    const dc=$('#cta .doc');pop(dc,t,b(40),0.45);if(t>b(40.5))dc.style.transform+=` rotate(${Math.sin(t*4)*4}deg)`;
+    slam($('#cta .a'),t,b(40.5),1.6);
+    pop($('#cta .badge'),t,b(42),0.45);
+    pop($('#wa'),t,b(43),0.45);
+    if(bt>45){const k=((bt-45)%2)/2;$('#wa').style.transform=`scale(${1+0.05*Math.max(0,Math.sin(clamp(k/0.18)*Math.PI))})`;}
+    upIn($('#cta .meta'),t,b(44),0.4,30);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>

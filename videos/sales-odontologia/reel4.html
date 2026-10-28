@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Mito ou Verdade</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root{--bg:#f4efe6;--ink:#151515;--red:#ef3e3e;--green:#1fb866;--gold:#c9993c;--wa:#25d366}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg);font-family:'Montserrat',sans-serif;color:var(--ink)}
+  img.em{height:1.1em;width:1.1em;vertical-align:-.2em;display:inline-block}
+  #tint{position:absolute;inset:0}
+  #dots{position:absolute;inset:0;background-image:radial-gradient(rgba(21,21,21,.08) 3px,transparent 3px);background-size:54px 54px}
+  #grain{position:absolute;inset:0;width:1080px;height:1920px;opacity:.08;mix-blend-mode:multiply;pointer-events:none}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+  #cam{position:absolute;inset:0;transform-origin:50% 45%}
+  .x{font-weight:900;text-transform:uppercase;letter-spacing:-3px;line-height:.95}
+  #brand{position:absolute;top:226px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:14px;font-size:28px;font-weight:800;letter-spacing:9px}
+  #brand svg{width:40px;height:28px}
+
+  /* intro */
+  #intro{position:absolute;inset:0}
+  .half{position:absolute;left:0;right:0;height:50%;display:flex;align-items:center;justify-content:center;color:#fff}
+  #top{top:0;background:var(--red);padding-top:160px}
+  #bot{bottom:0;background:var(--green);padding-bottom:200px}
+  .half .x{font-size:180px;white-space:nowrap}
+  #ou{position:absolute;left:50%;top:50%;width:250px;height:250px;margin:-125px 0 0 -125px;border-radius:50%;background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:96px;font-weight:900;box-shadow:0 20px 60px rgba(0,0,0,.35);border:10px solid #fff}
+  #think{position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-260px 0 0 70px}
+  #introSub{position:absolute;left:0;right:0;top:1500px;text-align:center;font-size:52px;font-weight:800;color:#fff}
+
+  /* question */
+  .q{position:absolute;inset:0}
+  .card{position:absolute;left:90px;right:90px;top:370px;height:690px;background:#fff;border-radius:56px;box-shadow:0 30px 80px rgba(0,0,0,.18);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 60px;text-align:center;transform-origin:50% 120%}
+  .card .lbl{position:absolute;top:44px;left:0;right:0;font-size:30px;font-weight:800;letter-spacing:8px;color:#9a948a}
+  .card .big{width:190px;height:190px;margin-bottom:30px}
+  .card .qt{font-size:82px;font-weight:900;letter-spacing:-2px;line-height:1.05}
+  .card .stampx{position:absolute;left:50%;top:22%;font-size:120px;font-weight:900;letter-spacing:-2px;padding:6px 40px;border:14px solid;border-radius:30px;
+    background:rgba(255,255,255,.92);white-space:nowrap;margin:0}
+  .btns{position:absolute;left:90px;right:90px;top:1100px;display:flex;gap:30px}
+  .btn{flex:1;height:130px;border-radius:70px;border:6px solid var(--ink);display:flex;align-items:center;justify-content:center;gap:16px;
+    font-size:54px;font-weight:900;background:#fff;position:relative;overflow:hidden}
+  .btn .fill{position:absolute;inset:0;transform-origin:50% 50%}
+  .btn span{position:relative}
+  .timer{position:absolute;left:50%;top:1270px;width:200px;height:200px;margin-left:-100px}
+  .timer svg{position:absolute;inset:0;transform:rotate(-90deg)}
+  .timer .n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:110px;font-weight:900}
+  .exp{position:absolute;left:80px;right:80px;top:1280px;text-align:center;font-family:'Inter',sans-serif;font-size:52px;font-weight:600;line-height:1.28}
+
+  /* CTA */
+  #cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center}
+  #cta .a{font-size:110px}
+  #cta .trophy{width:220px;height:220px;margin-bottom:20px}
+  #cta .b{font-family:'Inter',sans-serif;font-size:54px;font-weight:700;margin-top:40px;white-space:nowrap}
+  .badge{width:170px;height:170px;border-radius:50%;margin:50px auto 0;position:relative;
+    background:radial-gradient(circle at 42% 35%,#7a7a7a 0%,#4a4a4b 45%,#262628 100%);border:6px solid #c9a14d;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+  .badge svg{width:52px;height:34px}
+  .badge .n{font-family:'Cinzel',serif;font-size:38px;color:#f2efe9;letter-spacing:3px;padding-left:3px;line-height:1.1}
+  .badge .s{font-family:'Cinzel',serif;font-size:9px;color:#e4dccb;letter-spacing:3px;padding-left:3px}
+  #wa{margin-top:40px;display:flex;align-items:center;gap:24px;background:linear-gradient(180deg,#34e07b,#1fb457);color:#fff;
+    padding:26px 54px 26px 30px;border-radius:90px;box-shadow:0 20px 60px rgba(37,211,102,.35);text-align:left}
+  #wa .ic{width:96px;height:96px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+  #wa .t1{font-size:32px;font-weight:600}
+  #wa .t2{font-size:62px;font-weight:900}
+  #cta .meta{margin-top:30px;font-size:40px;font-weight:700}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d88f"/><stop offset="1" stop-color="#b7882e"/></linearGradient></defs></svg>
+  <div id="tint"></div><div id="dots"></div>
+  <div id="cam">
+    <div id="qs"></div>
+    <div id="cta">
+      <img class="trophy" src="emoji/1f3c6.png">
+      <div class="x a">Quantas você<br>acertou?</div>
+      <div class="b">Ficou com dúvida? Fala com a gente 💬</div>
+      <div class="badge"><svg viewBox="0 0 150 100"><path fill="none" stroke="url(#gg)" stroke-width="13" stroke-linecap="round" id="tp"/></svg><div class="n">SALES</div><div class="s">ODONTOLOGIA</div></div>
+      <div id="wa"><div class="ic"><svg width="62" height="62" viewBox="0 0 32 32"><path fill="#25d366" id="wp"/></svg></div><div><div class="t1">Chame no WhatsApp</div><div class="t2">(41) 98414-4299</div></div></div>
+      <div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div>
+    </div>
+    <div id="intro">
+      <div class="half" id="top"><span class="x">Mito ❌</span></div>
+      <div class="half" id="bot"><span class="x">Verdade ✅</span></div>
+      <div id="ou">OU</div>
+      <img id="think" src="emoji/1f914.png">
+      <div id="introSub">Responda antes do tempo acabar 👀</div>
+    </div>
+  </div>
+  <div id="brand"><svg viewBox="0 0 150 100"><path fill="none" stroke="url(#gg)" stroke-width="13" stroke-linecap="round" id="tp2"/></svg>SALES ODONTOLOGIA</div>
+  <canvas id="grain" width="540" height="960"></canvas>
+  <div id="flash"></div>
+</div>
+<script src="lib/anim.js"></script>
+<script>
+const B=0.5, b=n=>n*B, DUR=b(48)+0.8;     // 120 BPM
+const Q=[
+  {e:'✨',q:'Clareamento enfraquece os dentes?',a:false,x:'Com acompanhamento profissional, o clareamento é seguro 😁'},
+  {e:'😬',q:'Aparelho é só coisa de adolescente?',a:false,x:'Adultos também podem (e devem!) alinhar o sorriso 💪'},
+  {e:'🦷',q:'Implante devolve a mastigação e a estética?',a:true,x:'Ele substitui a raiz do dente e traz a confiança de volta 😎'},
+  {e:'🩸',q:'Gengiva sangrando ao escovar é normal?',a:false,x:'Pode ser sinal de inflamação. Procure um dentista 👀'},
+];
+const QS=i=>4+8*i;   // start beat of question i
+$('#tp').setAttribute('d',TOOTH_PATH);$('#tp2').setAttribute('d',TOOTH_PATH);$('#wp').setAttribute('d',WA_PATH);
+$('#qs').innerHTML=Q.map((q,i)=>`
+ <div class="q" id="q${i}">
+  <div class="card"><div class="lbl">PERGUNTA ${i+1}/4</div><div class="big">${q.e}</div><div class="qt">${q.q}</div>
+    <div class="stampx" style="color:${q.a?'var(--green)':'var(--red)'};border-color:${q.a?'var(--green)':'var(--red)'}">${q.a?'VERDADE':'MITO'}</div></div>
+  <div class="btns"><div class="btn bm"><div class="fill" style="background:var(--red)"></div><span>MITO ❌</span></div>
+    <div class="btn bv"><div class="fill" style="background:var(--green)"></div><span>VERDADE ✅</span></div></div>
+  <div class="timer"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="88" fill="#fff" stroke="rgba(0,0,0,.08)" stroke-width="14"/>
+    <circle class="ring" cx="100" cy="100" r="88" fill="none" stroke="#151515" stroke-width="14" stroke-linecap="round"/></svg><div class="n">3</div></div>
+  <div class="exp">${q.x}</div>
+ </div>`).join('');
+emojify($('#stage'));
+$$('.half .x').forEach(el=>fitText(el,980));fitText($('#cta .b'),980);
+// emoji inside .big should fill the box
+$$('.card .big img').forEach(im=>{im.style.width=im.style.height='190px';});
+$$('.card .qt').forEach(el=>{});
+const RING=2*Math.PI*88;
+$$('.ring').forEach(r=>{r.style.strokeDasharray=RING;});
+const grain=makeGrain($('#grain'),31,true);
+const HITS=[0,1,2,...Q.flatMap((_,i)=>[QS(i),QS(i)+4]),36,40];
+
+function render(t){
+  const bt=t/B; grain(t);
+  $('#cam').style.transform=`scale(${1+pulses(t,HITS.map(b),0.22,0.035)})`;
+  $('#flash').style.opacity=pulses(t,Q.map((_,i)=>b(QS(i)+4)),0.25,0.45);
+  $('#brand').style.color=bt<4?'#fff':'var(--ink)';
+  $('#brand').style.opacity=bt<3.5?0:1;
+
+  // background tint follows the current answer
+  let tint='rgba(0,0,0,0)';
+  Q.forEach((q,i)=>{const s=QS(i);if(bt>=s+4&&bt<s+8){const k=1-0.6*prog(bt,s+4,4);tint=q.a?`rgba(31,184,102,${0.22*k})`:`rgba(239,62,62,${0.2*k})`;}});
+  $('#tint').style.background=tint;
+
+  /* intro */
+  const intro=$('#intro');
+  if(vis(intro,t,0,b(4.2))){
+    const pt=eExpo(prog(t,0,0.35)), pb=eExpo(prog(t,b(1),0.35));
+    const out=eIn(prog(t,b(3.4),b(0.8)));
+    tf($('#top'),{y:-(1-pt)*960-out*960});
+    tf($('#bot'),{y:(1-pb)*960+out*960});
+    slam($('#top .x'),t,0.05); slam($('#bot .x'),t,b(1)+0.05);
+    pop($('#ou'),t,b(2),0.4); if(out>0)tf($('#ou'),{s:1-out,o:1-out});
+    const th=$('#think');pop(th,t,b(2.3),0.45);if(t>b(2.6))th.style.transform+=` rotate(${Math.sin(t*10)*8}deg)`;if(out>0)th.style.opacity=1-out;
+    upIn($('#introSub'),t,b(2.5),0.3,40);if(out>0)$('#introSub').style.opacity=1-out;
+  }
+
+  /* questions */
+  Q.forEach((q,i)=>{
+    const s=QS(i), el=$('#q'+i);
+    if(!vis(el,t,b(s),b(s+8)))return;
+    const card=el.querySelector('.card');
+    const pin=spring(prog(t,b(s),0.9));
+    const lean=eOut(prog(t,b(s+4),0.4))*(q.a?4:-4);
+    const out=eIn(prog(t,b(s+7.5),b(0.5)));
+    tf(card,{o:clamp((t-b(s))/0.1),y:lerp(1100,0,pin)-out*200,x:out*(q.a?1300:-1300),r:lerp(12,0,pin)+lean+out*(q.a?20:-20)});
+    el.querySelector('.card .big').style.transform=`translateY(${Math.sin(t*5)*8}px)`;
+    // stamp on reveal
+    const st=el.querySelector('.stampx');
+    if(t<b(s+4))st.style.opacity=0;
+    else{const p=prog(t,b(s+4),0.3);st.style.opacity=clamp(p*4);st.style.transform=`translate(-50%,-50%) scale(${lerp(2.4,1,eBack(p))}) rotate(${q.a?-10:10}deg)`;}
+    // buttons
+    const bm=el.querySelector('.bm'), bv=el.querySelector('.bv');
+    upIn(el.querySelector('.btns'),t,b(s+0.5),0.35,60);
+    const beatPulse=1+0.04*Math.max(0,Math.cos((bt%1)*Math.PI*2));
+    const rv=prog(t,b(s+4),0.3);
+    [[bm,!q.a],[bv,q.a]].forEach(([btn,right])=>{
+      const f=btn.querySelector('.fill');
+      f.style.transform=`scale(${right?eOut(rv):0})`;
+      btn.style.color=right&&rv>0.5?'#fff':'var(--ink)';
+      btn.style.borderColor=right&&rv>0?'transparent':'var(--ink)';
+      btn.style.opacity=t>=b(s+4)&&!right?0.35:1;
+      btn.style.transform=t<b(s+4)?`scale(${beatPulse})`:(right?`scale(${1+0.08*Math.sin(Math.PI*rv)})`:'scale(.96)');
+    });
+    if(out>0)el.querySelector('.btns').style.opacity=1-out;
+    // timer 3-2-1
+    const tm=el.querySelector('.timer');
+    const tp=prog(t,b(s+1),b(3));
+    tm.style.display=t<b(s+4)?'':'none';
+    pop(tm,t,b(s+0.8),0.35);
+    el.querySelector('.ring').style.strokeDashoffset=RING*tp;
+    const n=3-Math.floor(clamp(bt-(s+1),0,2.999));
+    const nn=el.querySelector('.timer .n');nn.textContent=n;
+    const pn=((bt-(s+1))%1+1)%1;nn.style.transform=`scale(${bt<s+1?1:lerp(1.4,1,eOut(clamp(pn/0.3)))})`;
+    // explanation
+    upIn(el.querySelector('.exp'),t,b(s+4.6),0.4,40);
+    if(out>0)el.querySelector('.exp').style.opacity=1-out;
+  });
+
+  /* CTA */
+  const cta=$('#cta');
+  if(vis(cta,t,b(36),DUR+1)){
+    const tr=$('#cta .trophy');pop(tr,t,b(36),0.45);if(t>b(36.5))tr.style.transform+=` rotate(${Math.sin(t*6)*6}deg)`;
+    slam($('#cta .a'),t,b(36.4));
+    upIn($('#cta .b'),t,b(38),0.4,40);
+    pop($('#cta .badge'),t,b(39),0.45);
+    pop($('#wa'),t,b(40),0.45);
+    if(bt>42){const k=((bt-42)%2)/2;$('#wa').style.transform=`scale(${1+0.05*Math.max(0,Math.sin(clamp(k/0.18)*Math.PI))})`;}
+    upIn($('#cta .meta'),t,b(41),0.4,30);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>

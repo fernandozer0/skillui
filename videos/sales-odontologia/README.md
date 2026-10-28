@@ -62,3 +62,21 @@ python3 music3.py music3.wav
 PAGE=reel3.html node render.js reel3_silent.mp4
 ffmpeg -i reel3_silent.mp4 -i music3.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart sales-odontologia-reels-v3.mp4
 ```
+
+## v4 — "Mito ou Verdade?" (`reel4.html`, `music4.py`)
+
+Quiz com 4 perguntas: cada uma tem contagem 3-2-1, revelação com carimbo MITO/VERDADE e explicação.
+Trilha 120 BPM estilo game show (tique-taque na contagem, buzina no mito, sino na verdade).
+
+## v5 — "5 sinais de que você precisa ir ao dentista" (`reel5.html`, `music5.py`)
+
+Contagem regressiva 5→1 (gengiva sangrando, sensibilidade, mau hálito, dor ao mastigar, +6 meses sem consulta),
+cada sinal com cor própria e emoji grande. Trilha 128 BPM com sirene, giro de números e despertador.
+
+`lib/anim.js` e `lib/synth.py` são os utilitários compartilhados a partir da v4.
+
+```sh
+python3 music4.py music4.wav && PAGE=reel4.html node render.js reel4_silent.mp4
+python3 music5.py music5.wav && PAGE=reel5.html node render.js reel5_silent.mp4
+ffmpeg -i reelN_silent.mp4 -i musicN.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart sales-odontologia-reels-vN.mp4
+```
