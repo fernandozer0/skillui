@@ -42,3 +42,23 @@ python3 music2.py music2.wav
 PAGE=reel2.html node render.js reel2_silent.mp4
 ffmpeg -i reel2_silent.mp4 -i music2.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart sales-odontologia-reels-v2.mp4
 ```
+
+## v3 — "vida no iPhone" + emojis da Apple (`reel3.html`, `music3.py`)
+
+- `sales-odontologia-reels-v3.mp4` — vídeo final (1080×1920, 30 fps, ~23,6 s, com trilha)
+- `capa-v3.jpg` — sugestão de capa
+- `emoji/` — emojis no estilo iPhone (Apple), usados no lugar dos emojis do sistema
+
+| Batidas (100 BPM) | Cena |
+|---|---|
+| 0–6 | Tela de bloqueio: notificações ("32 fotos… e você não sorri em nenhuma") → "Isso acontece com você? 🫣" |
+| 6–16 | App Notas: lista "Metas 💫"; marcar "Avaliação na Sales" resolve o resto |
+| 16–24 | Tela inicial com "apps" dos tratamentos (balançando como no iOS) → zoom no 🦷 |
+| 24–30 | Busca Spotlight "dentista em curitiba" → card da Sales Odontologia |
+| 30–38 | Lembrete do Calendário + CTA WhatsApp com chuva de emojis |
+
+```sh
+python3 music3.py music3.wav
+PAGE=reel3.html node render.js reel3_silent.mp4
+ffmpeg -i reel3_silent.mp4 -i music3.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart sales-odontologia-reels-v3.mp4
+```
