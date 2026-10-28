@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Este ou aquele</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  :root{--bg:#12062b;--cy:#00e5ff;--mg:#ff3df2;--yl:#ffe14d}
+  #stage{background:var(--bg);color:#fff}
+  #floorWrap{position:absolute;left:0;right:0;bottom:0;height:46%;perspective:520px;perspective-origin:50% 0;overflow:hidden;
+}
+  #floor{position:absolute;left:-60%;right:-60%;bottom:0;height:300%;transform:rotateX(70deg);transform-origin:50% 100%;
+    background-image:linear-gradient(rgba(255,61,242,.45) 3px,transparent 3px),linear-gradient(90deg,rgba(0,229,255,.35) 3px,transparent 3px);background-size:120px 120px}
+  #sun{position:absolute;left:50%;top:22%;width:700px;height:700px;margin-left:-350px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,61,242,.35),rgba(255,61,242,0) 65%)}
+  #brand{color:#fff}
+  .neon-c{color:#fff;text-shadow:0 0 10px var(--cy),0 0 30px var(--cy),0 0 60px var(--cy)}
+  .neon-m{color:#fff;text-shadow:0 0 10px var(--mg),0 0 30px var(--mg),0 0 60px var(--mg)}
+  #intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:220px;text-align:center}
+  #intro .a{font-size:180px} #intro .vs{width:220px;height:220px;margin:20px 0} #intro .b{font-size:180px}
+  #intro .c{font-family:'Inter',sans-serif;font-size:56px;font-weight:700;margin-top:40px;color:var(--yl)}
+  .rd{position:absolute;inset:0}
+  .rd .k{position:absolute;top:330px;left:0;right:0;text-align:center;font-size:34px;font-weight:800;letter-spacing:10px;color:var(--yl)}
+  .opt{position:absolute;top:430px;width:470px;height:640px;border-radius:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+  .opt img.big{width:240px;height:240px;margin-bottom:30px}
+  .opt .l{font-size:60px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;line-height:1}
+  .oa{left:50px;border:6px solid var(--cy);box-shadow:0 0 30px rgba(0,229,255,.6),inset 0 0 30px rgba(0,229,255,.25);background:rgba(0,229,255,.08)}
+  .ob{right:50px;border:6px solid var(--mg);box-shadow:0 0 30px rgba(255,61,242,.6),inset 0 0 30px rgba(255,61,242,.25);background:rgba(255,61,242,.08)}
+  .vsb{position:absolute;left:50%;top:680px;width:170px;height:170px;margin-left:-85px;border-radius:50%;background:var(--yl);color:#12062b;
+    display:flex;align-items:center;justify-content:center;font-size:76px;font-weight:900;box-shadow:0 0 40px rgba(255,225,77,.8);border:8px solid #12062b}
+  .tip{position:absolute;left:60px;right:60px;top:1130px;border-radius:40px;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.3);padding:34px 40px;text-align:center}
+  .tip .h{font-size:32px;font-weight:800;letter-spacing:6px;color:var(--yl)}
+  .tip .d{font-family:'Inter',sans-serif;font-size:52px;font-weight:700;line-height:1.25;margin-top:12px}
+  #cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center}
+  #cta .big{width:220px;height:220px;margin-bottom:20px}
+  #cta .a{font-size:96px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="sun"></div><div id="floorWrap"><div id="floor"></div></div>
+  <div id="cam">
+    <div id="intro"><div class="x a neon-c">Este</div><img class="vs" src="emoji/1f19a.png"><div class="x b neon-m">Aquele</div><div class="c">Edição sorriso 😁<br>Qual você escolhe?</div></div>
+    <div id="rounds"></div>
+    <div id="cta"><img class="big" src="emoji/1f91d.png"><div class="x a">Na dúvida,<br><span class="neon-c">a gente te</span><br><span class="neon-m">ajuda!</span></div><div id="bdg"></div><div id="wa"></div><div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div></div>
+  </div>
+  <canvas id="grain" width="540" height="960" style="mix-blend-mode:overlay"></canvas>
+  <div id="flash"></div>
+</div>
+<script src="lib/anim.js"></script>
+<script>
+const B=0.5, b=n=>n*B, DUR=b(38)+0.8;
+document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
+$('#stage').insertAdjacentHTML('beforeend',brandHTML());
+$('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML();
+const RD=[
+  {a:['26a1','Escova<br>elétrica'],b:['1faa5','Escova<br>manual'],d:'As duas funcionam se a técnica estiver certa!'},
+  {a:['1f9f5','Fio<br>dental'],b:['1f4a7','Irrigador<br>oral'],d:'O fio é essencial. O irrigador complementa 😉'},
+  {a:['1f62c','Aparelho<br>fixo'],b:['1f601','Alinhador<br>invisível'],d:'Cada caso tem a melhor indicação. A gente avalia!'},
+  {a:['1f3e0','Clareamento<br>caseiro'],b:['1f3e5','Clareamento<br>no consultório'],d:'Os dois, sempre com acompanhamento do dentista ✨'},
+];
+const RS=i=>4+6*i;
+$('#rounds').innerHTML=RD.map((r,i)=>`<div class="rd" id="rd${i}"><div class="k">RODADA ${i+1}/4</div>
+  <div class="opt oa"><img class="big" src="emoji/${r.a[0]}.png"><div class="l neon-c">${r.a[1]}</div></div>
+  <div class="opt ob"><img class="big" src="emoji/${r.b[0]}.png"><div class="l neon-m">${r.b[1]}</div></div>
+  <div class="vsb">VS</div><div class="tip"><div class="h">💡 DICA DA SALES</div><div class="d">${r.d}</div></div></div>`).join('');
+emojify($('#stage'));
+$$('.opt .l').forEach(el=>{let fs=60;while(el.scrollWidth>410&&fs>30){fs-=2;el.style.fontSize=fs+'px';}});
+const grain=makeGrain($('#grain'),101);
+
+function render(t){
+  const bt=t/B; grain(t);
+  $('#floor').style.backgroundPosition=`0 ${(t*240)%120}px`;
+  $('#cam').style.transform=`scale(${1+pulses(t,[0,b(1),b(2),...RD.map((_,i)=>b(RS(i))),b(28)],0.22,0.035)+0.006*Math.max(0,Math.cos((bt%1)*Math.PI*2))})`;
+  $('#flash').style.opacity=pulses(t,RD.map((_,i)=>b(RS(i)+3)),0.2,0.25);
+  // neon flicker
+  const fl=(Math.sin(t*37)>0.93)?0.55:1;
+
+  const it=$('#intro');
+  if(vis(it,t,0,b(4))){
+    slam($('#intro .a'),t,0); pop($('#intro .vs'),t,b(1),0.4); slam($('#intro .b'),t,b(2));
+    $('#intro .a').style.opacity=Math.min(+$('#intro .a').style.opacity,fl);
+    upIn($('#intro .c'),t,b(2.6),0.35,30);
+    const x=eIn(prog(t,b(3.5),b(0.5)));if(x>0)tf(it,{o:1-x,s:1+x*0.5});
+  }
+  RD.forEach((r,i)=>{
+    const el=$('#rd'+i),s=RS(i);if(!vis(el,t,b(s),b(s+6)))return;
+    upIn(el.querySelector('.k'),t,b(s),0.3,20);
+    const pa=eExpo(prog(t,b(s),0.4)),pb=eExpo(prog(t,b(s)+0.12,0.4));
+    const out=eIn(prog(t,b(s+5.6),b(0.4)));
+    const oa=el.querySelector('.oa'),ob=el.querySelector('.ob');
+    // "selector" bounces between the two options on each beat, then both glow (no wrong answer)
+    const sel=bt<s+3?(Math.floor(bt*2)%2):-1;
+    const both=bt>=s+3;
+    tf(oa,{x:lerp(-700,0,pa)-out*700,s:(sel===0?1.05:(both?1.03:0.97)),o:sel===1?0.6:1});
+    tf(ob,{x:lerp(700,0,pb)+out*700,s:(sel===1?1.05:(both?1.03:0.97)),o:sel===0?0.6:1});
+    oa.querySelector('.big').style.transform=`translateY(${Math.sin(t*5)*10}px)`;
+    ob.querySelector('.big').style.transform=`translateY(${Math.cos(t*5)*10}px)`;
+    const v=el.querySelector('.vsb');pop(v,t,b(s+0.5),0.4);v.style.transform+=` rotate(${Math.sin(t*8)*8}deg)`;if(out>0)v.style.opacity=1-out;
+    const tp=el.querySelector('.tip');const pt=spring(prog(t,b(s+3),0.8));tf(tp,{o:clamp((t-b(s+3))/0.1)*(1-out),y:lerp(200,0,pt)});if(t<b(s+3))tp.style.opacity=0;
+  });
+  const ct=$('#cta');
+  if(vis(ct,t,b(28),DUR+1)){
+    const bg=$('#cta .big');pop(bg,t,b(28),0.45);bg.style.transform+=` rotate(${Math.sin(t*5)*6}deg)`;
+    slam($('#cta .a'),t,b(28.4),1.5);pop($('#cta .badge'),t,b(30),0.45);pop($('#cta .wa'),t,b(31),0.45);
+    waBeat($('#cta .wa'),bt,33);upIn($('#cta .meta'),t,b(32),0.4,30);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>

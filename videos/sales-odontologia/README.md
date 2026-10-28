@@ -95,3 +95,16 @@ Caixinha de perguntas que gira na tela, pergunta sendo digitada e resposta em de
 
 `lib/common.css` reúne os estilos do selo, do botão de WhatsApp e da marca usados a partir da v6.
 `render_all.sh 6 7 8 9` renderiza e junta o áudio de vários vídeos de uma vez.
+
+## v10 — "Este ou aquele?" (`reel10.html`, `music10.py`)
+Visual neon/synthwave com chão quadriculado: 4 rodadas de escolha (escova elétrica × manual, fio × irrigador,
+aparelho fixo × alinhador, clareamento caseiro × consultório) e uma dica da Sales em cada.
+
+## v11 — "Você sabia? 🤯" (`reel11.html`, `music11.py`)
+Estilo história em quadrinhos (amarelo, retícula, estrela): 32 dentes, esmalte, dentes únicos, sorriso.
+
+## v12 — "A rotina do sorriso perfeito" (`reel12.html`, `music12.py`)
+O céu muda do amanhecer à noite com sol/lua em arco: ao acordar, após refeições, antes de dormir, a cada 6 meses.
+
+## v13 — Trailer "O Sorriso Perfeito" (`reel13.html`, `music13.py`)
+Paródia de trailer de cinema com faixas pretas, cartelas em Cinzel, "Estrelando: você ⭐" e "Em cartaz em Curitiba 🎬".

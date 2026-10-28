@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Você sabia</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  :root{--yl:#ffd23f;--ink:#111;--pink:#ff5c8a;--blue:#3d7bff}
+  #stage{background:var(--yl);color:var(--ink)}
+  #dots{position:absolute;inset:0;background-image:radial-gradient(rgba(0,0,0,.13) 5px,transparent 5.5px);background-size:34px 34px}
+  #brand{color:var(--ink)}
+  .burst{position:absolute;left:50%;top:660px;width:720px;height:720px;margin:-360px 0 0 -360px}
+  #intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:220px;text-align:center}
+  #intro .mind{width:300px;height:300px;margin-bottom:10px}
+  #intro .a{font-size:190px;color:#fff;-webkit-text-stroke:10px var(--ink);paint-order:stroke fill;text-shadow:14px 14px 0 var(--ink)}
+  #intro .b{font-family:'Inter',sans-serif;font-size:54px;font-weight:800;margin-top:30px;background:var(--ink);color:var(--yl);padding:14px 30px;border-radius:16px}
+  .fc{position:absolute;inset:0}
+  .fc .k{font-size:32px;font-weight:900;letter-spacing:8px;margin-bottom:14px}
+  .fc .hero{position:absolute;left:0;right:0;top:420px;height:440px;display:flex;align-items:center;justify-content:center}
+  .fc .num{font-size:330px;font-weight:900;color:#fff;-webkit-text-stroke:12px var(--ink);paint-order:stroke fill;text-shadow:18px 18px 0 var(--ink);letter-spacing:-10px;line-height:1}
+  .fc .hero img{width:330px;height:330px;filter:drop-shadow(14px 14px 0 rgba(0,0,0,.85))}
+  .fc .card{position:absolute;left:70px;right:70px;top:960px;background:#fff;border:8px solid var(--ink);border-radius:36px;box-shadow:16px 16px 0 var(--ink);padding:40px 44px;text-align:center}
+  .fc .card .t{font-family:'Inter',sans-serif;font-size:58px;font-weight:800;line-height:1.22}
+  .fc .card .s{font-family:'Inter',sans-serif;font-size:40px;font-weight:600;margin-top:16px;color:#555}
+  #cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center}
+  #cta .big{width:220px;height:220px;margin-bottom:10px}
+  #cta .a{font-size:90px}
+  #cta .a span{background:var(--ink);color:var(--yl);padding:0 18px}
+  #cta .meta{color:var(--ink)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="dots"></div>
+  <svg class="burst" id="burst" viewBox="-100 -100 200 200"></svg>
+  <div id="cam">
+    <div id="intro"><img class="mind" src="emoji/1f92f.png"><div class="x a">Você<br>sabia?</div><div class="b">4 curiosidades sobre os dentes</div></div>
+    <div id="facts"></div>
+    <div id="cta"><img class="big" src="emoji/1f49b.png"><div class="x a">Agora você sabe:<br>seu sorriso<br><span>merece cuidado</span></div><div id="bdg"></div><div id="wa"></div><div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div></div>
+  </div>
+  <canvas id="grain" width="540" height="960" style="mix-blend-mode:multiply;opacity:.08"></canvas>
+  <div id="flash"></div>
+</div>
+<script src="lib/anim.js"></script>
+<script>
+const B=60/115, b=n=>n*B, DUR=b(42)+0.8;
+document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
+$('#stage').insertAdjacentHTML('beforeend',brandHTML());
+$('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML();
+// comic starburst
+let d='';for(let i=0;i<32;i++){const a=i/32*Math.PI*2,r=i%2?62:96;d+=(i?'L':'M')+(Math.cos(a)*r).toFixed(1)+' '+(Math.sin(a)*r).toFixed(1);}
+$('#burst').innerHTML=`<path d="${d}Z" fill="#fff" stroke="#111" stroke-width="3"/>`;
+const F=[
+  {k:'CURIOSIDADE 1',hero:'count',to:32,suf:'',t:'dentes tem um adulto 🦷',s:'contando os sisos',col:'#ff5c8a'},
+  {k:'CURIOSIDADE 2',hero:'img',e:'1f48e',t:'O esmalte é o tecido mais duro do corpo humano',s:'mais duro até que os ossos 💪',col:'#3d7bff'},
+  {k:'CURIOSIDADE 3',hero:'count',to:100,suf:'%',t:'Seus dentes são únicos 🔍',s:'como uma impressão digital',col:'#16b47a'},
+  {k:'CURIOSIDADE 4',hero:'img',e:'1f601',t:'Sorrir ativa vários músculos do rosto',s:'e sorriso é contagioso! 😄',col:'#ff8a1f'},
+];
+const FS=i=>4+7*i;
+$('#facts').innerHTML=F.map((f,i)=>`<div class="fc" id="fc${i}">
+  <div class="hero">${f.hero==='count'?'<div class="num">0</div>':`<img src="emoji/${f.e}.png">`}</div>
+  <div class="card"><div class="k" style="color:${f.col}">${f.k}</div><div class="t">${f.t}</div><div class="s">${f.s}</div></div></div>`).join('');
+// 😄 not downloaded → 😁
+$$('.s').forEach(el=>el.innerHTML=el.innerHTML.replace('😄','😁'));
+emojify($('#stage'));
+const grain=makeGrain($('#grain'),111,true);
+
+function render(t){
+  const bt=t/B; grain(t);
+  $('#cam').style.transform=`scale(${1+pulses(t,[0,b(1),...F.map((_,i)=>b(FS(i))),b(32)],0.22,0.04)})`;
+  // burst color per section, spins
+  let col='#fff';F.forEach((f,i)=>{if(bt>=FS(i)&&bt<FS(i)+7)col=f.col;});if(bt>=32)col='#fff';
+  const bu=$('#burst');bu.querySelector('path').setAttribute('fill',col);
+  bu.style.transform=`rotate(${t*20}deg) scale(${1+0.05*Math.max(0,Math.cos((bt%1)*Math.PI*2))})`;
+  bu.style.opacity=bt<32?1:0.35;
+
+  const it=$('#intro');
+  if(vis(it,t,0,b(4))){
+    const m=$('#intro .mind');pop(m,t,0,0.4);m.style.transform+=` rotate(${Math.sin(t*12)*6}deg)`;
+    stamp($('#intro .a'),t,b(1),-4,0.3); upIn($('#intro .b'),t,b(2),0.35,30);
+    const x=eIn(prog(t,b(3.5),b(0.5)));if(x>0)tf(it,{o:1-x,s:1+x*0.5});
+  }
+  F.forEach((f,i)=>{
+    const el=$('#fc'+i),s=FS(i);if(!vis(el,t,b(s),b(s+7)))return;
+    const hero=el.querySelector('.hero>*');
+    if(f.hero==='count'){
+      const p=eOut(prog(t,b(s)+0.1,b(2)));hero.textContent=Math.round(f.to*p)+f.suf;
+      tf(hero,{s:t<b(s)+0.1?0.5:lerp(0.6,1,eBack(prog(t,b(s)+0.1,0.4)))*(p>=1?1+0.04*Math.sin(t*8):1),r:-4});
+    }else{pop(hero,t,b(s)+0.1,0.5);hero.style.transform+=` rotate(${Math.sin(t*4)*6}deg)`;}
+    const c=el.querySelector('.card');const pc=prog(t,b(s+1.5),0.35);
+    tf(c,{o:clamp(pc*4),s:t<b(s+1.5)?0.001:lerp(0.5,1,eBack(pc)),r:i%2?1.5:-1.5});
+    const x=eIn(prog(t,b(s+6.6),b(0.4)));if(x>0)tf(el,{o:1-x,y:x*300});else el.style.transform='';
+  });
+  const ct=$('#cta');
+  if(vis(ct,t,b(32),DUR+1)){
+    const bg=$('#cta .big');pop(bg,t,b(32),0.45);bg.style.transform+=` scale(${1+0.08*Math.max(0,Math.sin(bt*Math.PI))})`;
+    slam($('#cta .a'),t,b(32.4),1.5);pop($('#cta .badge'),t,b(34),0.45);pop($('#cta .wa'),t,b(35),0.45);
+    waBeat($('#cta .wa'),bt,37);upIn($('#cta .meta'),t,b(36),0.4,30);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Rotina do sorriso</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  #stage{color:#fff;background:#ffb27a}
+  #sky{position:absolute;inset:0}
+  #stars{position:absolute;inset:0}
+  .st{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff}
+  #orb{position:absolute;width:230px;height:230px;filter:drop-shadow(0 0 40px rgba(255,240,180,.8))}
+  #hills{position:absolute;left:0;right:0;bottom:0;height:420px}
+  #brand{color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.2)}
+  #intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:260px;text-align:center}
+  #intro .a{font-size:120px;text-shadow:0 10px 40px rgba(120,40,0,.25)}
+  #intro .b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:110px;margin-top:6px}
+  .mo{position:absolute;inset:0}
+  .mo .chip{position:absolute;left:50%;top:640px;transform-origin:50% 50%;display:flex;align-items:center;gap:20px;
+    background:rgba(255,255,255,.22);border:3px solid rgba(255,255,255,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    padding:18px 40px;border-radius:60px;font-size:56px;font-weight:900;white-space:nowrap}
+  .mo .card{position:absolute;left:70px;right:70px;top:800px;border-radius:50px;padding:46px;background:rgba(255,255,255,.9);color:#1d2238;text-align:center;
+    box-shadow:0 30px 70px rgba(0,0,0,.18)}
+  .mo .card .ic{width:150px;height:150px}
+  .mo .card .t{font-size:78px;margin-top:14px}
+  .mo .card .d{font-family:'Inter',sans-serif;font-size:50px;font-weight:600;line-height:1.28;margin-top:16px;color:#3b4160}
+  #timeline{position:absolute;left:90px;right:90px;top:1490px;height:10px;border-radius:10px;background:rgba(255,255,255,.3)}
+  #timeline b{position:absolute;left:0;top:0;bottom:0;border-radius:10px;background:#fff;transform-origin:0 50%}
+  #timeline i{position:absolute;top:-11px;width:32px;height:32px;margin-left:-16px;border-radius:50%;background:rgba(255,255,255,.4);border:4px solid #fff}
+  #cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center}
+  #cta .big{width:220px;height:220px;margin-bottom:10px}
+  #cta .a{font-size:92px;text-shadow:0 10px 40px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="sky"></div><div id="stars"></div>
+  <img id="orb" src="emoji/2600.png">
+  <svg id="hills" viewBox="0 0 1080 420" preserveAspectRatio="none"><path id="h1" d="M0 220 C 200 140 380 160 560 210 C 760 270 900 170 1080 150 L1080 420 L0 420 Z"/><path id="h2" d="M0 300 C 240 240 420 300 620 290 C 820 280 940 230 1080 250 L1080 420 L0 420 Z"/></svg>
+  <div id="cam">
+    <div id="intro"><div class="x a">A rotina do</div><div class="b">sorriso perfeito ✨</div></div>
+    <div id="moments"></div>
+    <div id="timeline"><b></b><i style="left:0%"></i><i style="left:33.3%"></i><i style="left:66.6%"></i><i style="left:100%"></i></div>
+    <div id="cta"><img class="big" src="emoji/1f601.png"><div class="x a">Sua parte<br>é em casa.<br>A nossa é aqui 🦷</div><div id="bdg"></div><div id="wa"></div><div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div></div>
+  </div>
+  <canvas id="grain" width="540" height="960" style="mix-blend-mode:overlay"></canvas>
+  <div id="flash"></div>
+</div>
+<script src="lib/anim.js"></script>
+<script>
+const B=0.6, b=n=>n*B, DUR=b(40)+0.8;   // 100 BPM
+document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
+$('#stage').insertAdjacentHTML('beforeend',brandHTML());
+$('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML();
+const M=[
+  {chip:'☀️ 07:00',e:'1faa5',t:'Ao acordar',d:'Escove os dentes por 2 minutos, sem pressa.'},
+  {chip:'🍽️ 12:30',e:'1f4a7',t:'Depois das refeições',d:'Escove ou, pelo menos, bocheche com água.'},
+  {chip:'🌙 22:00',e:'1f9f5',t:'Antes de dormir',d:'Fio dental + escovação: a limpeza mais importante do dia.'},
+  {chip:'📅 A cada 6 meses',e:'1f9b7',t:'Consulta e limpeza',d:'Check-up com o dentista para manter tudo em dia.'},
+];
+const MS=i=>4+7*i;
+$('#moments').innerHTML=M.map((m,i)=>`<div class="mo" id="mo${i}"><div class="chip">${m.chip}</div>
+  <div class="card"><img class="ic" src="emoji/${m.e}.png"><div class="x t">${m.t}</div><div class="d">${m.d}</div></div></div>`).join('');
+emojify($('#stage'));
+$$('.mo .card .x').forEach(el=>{el.style.whiteSpace='normal';});
+const R=rng(3);const stars=[];
+for(let i=0;i<60;i++){const s=document.createElement('div');s.className='st';$('#stars').appendChild(s);
+  stars.push({el:s,x:R()*1080,y:R()*1100,ph:R()*6,sz:3+R()*6});s.style.left=stars[i].x+'px';s.style.top=stars[i].y+'px';s.style.width=s.style.height=stars[i].sz+'px';}
+const grain=makeGrain($('#grain'),121);
+// sky keyframes over the day: [beat, top, bottom, hill1, hill2, starAlpha]
+const SKY=[[0,'#ff9a6b','#ffd6a0','#e07b5a','#c8644b',0],[MS(0),'#7fc4ff','#ffe3b0','#7bc47f','#5aa86a',0],[MS(1),'#4aa8ff','#bfe6ff','#63b86b','#4c9a5c',0],
+  [MS(2),'#0e1640','#3b2d6e','#1c2550','#141a3a',1],[MS(3),'#ff9a6b','#ffd6a0','#e07b5a','#c8644b',0],[34,'#2a1f4a','#c9993c','#3a2e5a','#2a2146',0.4]];
+const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const mix=(a,c,x)=>{const A=hex(a),C=hex(c);return `rgb(${A.map((v,i)=>Math.round(lerp(v,C[i],x))).join(',')})`;};
+
+function render(t){
+  const bt=t/B; grain(t);
+  // interpolate sky
+  let k=0;while(k<SKY.length-2&&bt>=SKY[k+1][0])k++;
+  const A=SKY[k],C=SKY[k+1];const x=eInOut(clamp((bt-(C[0]-2))/2));   // reach each keyframe's colours right on its beat
+  $('#sky').style.background=`linear-gradient(180deg,${mix(A[1],C[1],x)},${mix(A[2],C[2],x)})`;
+  $('#h1').setAttribute('fill',mix(A[3],C[3],x));$('#h2').setAttribute('fill',mix(A[4],C[4],x));
+  const sa=lerp(A[5],C[5],x);stars.forEach(s=>s.el.style.opacity=sa*(0.5+0.5*Math.sin(t*3+s.ph)));
+  // sun/moon along an arc
+  const night=bt>=MS(2)-0.5&&bt<MS(3);
+  const orb=$('#orb');orb.src=night?'emoji/1f319.png':'emoji/2600.png';
+  const arcP=bt<MS(2)?clamp(bt/MS(2)):(night?clamp((bt-MS(2))/7):clamp((bt-MS(3))/7));
+  orb.style.left=lerp(60,790,arcP)+'px';orb.style.top=(360-Math.sin(Math.PI*arcP)*90)+'px';
+  orb.style.transform=`rotate(${t*15}deg)`;
+  $('#cam').style.transform=`scale(${1+pulses(t,[0,...M.map((_,i)=>b(MS(i))),b(32)],0.25,0.03)})`;
+
+  const it=$('#intro');
+  if(vis(it,t,0,b(4))){slam($('#intro .a'),t,0.1,1.5);upIn($('#intro .b'),t,b(1),0.5,50);
+    const xx=eIn(prog(t,b(3.5),b(0.5)));if(xx>0)tf(it,{o:1-xx,y:-xx*100});}
+  const tl=$('#timeline');tl.style.display=bt>=MS(0)&&bt<32?'':'none';
+  tl.querySelector('b').style.transform=`scaleX(${clamp((bt-MS(0))/(7*3))})`;
+  $$('#timeline i').forEach((d,i)=>{d.style.background=bt>=MS(i)?'#fff':'rgba(255,255,255,.4)';d.style.transform=`scale(${bt>=MS(i)&&bt<MS(i)+0.6?1.4:1})`;});
+  M.forEach((m,i)=>{
+    const el=$('#mo'+i),s=MS(i);if(!vis(el,t,b(s),b(s+7)))return;
+    const ch=el.querySelector('.chip');const pc=prog(t,b(s),0.45);
+    ch.style.opacity=clamp(pc*4);ch.style.transform=`translateX(-50%) scale(${t<b(s)?0.001:lerp(0.4,1,eBack(pc))})`;
+    const cd=el.querySelector('.card');const pd=spring(prog(t,b(s+0.6),0.9));tf(cd,{o:clamp((t-b(s+0.6))/0.1),y:lerp(400,0,pd)});if(t<b(s+0.6))cd.style.opacity=0;
+    const ic=cd.querySelector('.ic');ic.style.transform=`rotate(${Math.sin(t*4)*8}deg) translateY(${Math.sin(t*3)*6}px)`;
+    const xx=eIn(prog(t,b(s+6.6),b(0.4)));if(xx>0)tf(el,{o:1-xx,x:-xx*300});else el.style.transform='';
+  });
+  const ct=$('#cta');
+  if(vis(ct,t,b(32),DUR+1)){
+    const bg=$('#cta .big');pop(bg,t,b(32),0.45);bg.style.transform+=` rotate(${Math.sin(t*4)*6}deg)`;
+    slam($('#cta .a'),t,b(32.4),1.5);pop($('#cta .badge'),t,b(34),0.45);pop($('#cta .wa'),t,b(35),0.45);
+    waBeat($('#cta .wa'),bt,37);upIn($('#cta .meta'),t,b(36),0.4,30);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>
