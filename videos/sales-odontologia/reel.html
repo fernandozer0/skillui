@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Reels</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root{
+    --bg:#0c0c0e; --ink:#f4efe4; --muted:#b9b2a3;
+    --gold-a:#fff4cc; --gold-b:#e9c56b; --gold-c:#b7882e; --gold-d:#f3d88f;
+    --wa:#25d366;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg);
+    font-family:'Montserrat',sans-serif;color:var(--ink)}
+  #glow{position:absolute;inset:-20%;pointer-events:none}
+  #dust{position:absolute;inset:0;pointer-events:none}
+  .dot{position:absolute;border-radius:50%;background:radial-gradient(circle,#ffe7a3 0%,rgba(233,197,107,.6) 40%,rgba(233,197,107,0) 70%)}
+  #grain{position:absolute;inset:0;width:1080px;height:1920px;opacity:.07;mix-blend-mode:overlay;pointer-events:none}
+  #vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 75% 60% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.65) 100%)}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+  #cam{position:absolute;inset:0;transform-origin:50% 45%}
+
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding-bottom:180px;text-align:center}
+  .line{display:inline-block;white-space:nowrap;will-change:transform,opacity}
+  .mask{display:block;overflow:hidden;padding:0 20px}
+  .mask>.line{display:inline-block}
+  .gold{background:linear-gradient(180deg,var(--gold-a) 0%,var(--gold-b) 38%,var(--gold-c) 68%,var(--gold-d) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .black{font-weight:900;letter-spacing:-2px;line-height:.98;text-transform:uppercase}
+  .serif-i{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500}
+
+  /* S1 hook */
+  #s1 .line{font-size:150px}
+  #s1 .l4{font-size:168px;margin-top:10px}
+  #s1 .emoji{font-size:170px;margin-top:40px;font-family:'Noto Color Emoji'}
+
+  /* S2 white */
+  #white{position:absolute;inset:0;background:#f6f1e6}
+  #s2{color:#121212}
+  #s2 .line{font-size:200px}
+  #s2 .hoje{position:relative;display:inline-block}
+  #s2 .hoje .txt{position:relative;z-index:2}
+  #marker{position:absolute;left:-14px;right:-14px;bottom:22px;height:70px;z-index:1;
+    background:linear-gradient(90deg,#e9c56b,#c9993c);transform-origin:0 50%;border-radius:6px}
+  #s2 .sub{font-size:46px;font-weight:600;margin-top:46px;color:#3b3833;letter-spacing:.5px}
+
+  /* badge / logo */
+  .badge{position:relative;width:560px;height:560px;border-radius:50%;
+    background:radial-gradient(circle at 42% 35%,#7a7a7a 0%,#4a4a4b 45%,#262628 100%);
+    box-shadow:0 30px 90px rgba(0,0,0,.6), inset 0 0 40px rgba(0,0,0,.45);overflow:hidden}
+  .badge svg.ring{position:absolute;inset:0}
+  .badge .tooth{position:absolute;left:50%;top:118px;width:150px;margin-left:-75px}
+  .badge .name{position:absolute;left:0;right:0;top:228px;font-family:'Cinzel',serif;font-weight:500;font-size:118px;
+    color:#f2efe9;letter-spacing:12px;padding-left:12px;text-shadow:0 3px 8px rgba(0,0,0,.4)}
+  .badge .sub{position:absolute;left:0;right:0;top:372px;font-family:'Cinzel',serif;font-size:27px;letter-spacing:13px;
+    padding-left:13px;color:#e4dccb}
+  .badge .shine{position:absolute;top:-20%;bottom:-20%;width:140px;left:-200px;transform:rotate(18deg);
+    background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,248,220,.45),rgba(255,255,255,0))}
+  #s3 .pre{font-size:54px;font-weight:600;letter-spacing:10px;text-transform:uppercase;color:var(--muted);margin-bottom:60px}
+  #s3 .post{margin-top:64px;font-size:52px}
+
+  /* S4 services */
+  #s4 .label{position:absolute;top:300px;left:0;right:0;font-size:34px;font-weight:600;letter-spacing:14px;color:var(--muted)}
+  .card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:180px}
+  .card .num{position:absolute;top:380px;right:90px;font-size:210px;font-weight:900;color:transparent;
+    -webkit-text-stroke:3px rgba(233,197,107,.45);letter-spacing:-4px}
+  .card svg{width:380px;height:380px;overflow:visible;filter:drop-shadow(0 0 22px rgba(233,197,107,.35))}
+  .card .word{font-size:150px;margin-top:40px}
+  .card .tag{font-size:50px;font-weight:400;margin-top:26px;color:var(--ink)}
+  .card .tag b{font-weight:800}
+  #pbar{position:absolute;left:140px;right:140px;top:1440px;display:flex;gap:16px}
+  #pbar i{flex:1;height:8px;border-radius:8px;background:rgba(255,255,255,.18);overflow:hidden;position:relative}
+  #pbar i b{position:absolute;inset:0;background:linear-gradient(90deg,var(--gold-b),var(--gold-d));transform-origin:0 50%;transform:scaleX(0)}
+
+  /* S5 */
+  #s5 .line.big{font-size:150px}
+  #s5 .l2{font-size:110px}
+  #s5 .l3{font-size:84px;margin-top:20px}
+  #chips{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;width:960px;margin-top:60px}
+  .chip{font-size:40px;font-weight:600;padding:20px 36px;border-radius:60px;border:2px solid rgba(233,197,107,.6);
+    background:rgba(233,197,107,.08);color:var(--ink)}
+
+  /* S6 */
+  #s6 svg{width:230px;height:230px;overflow:visible;margin-bottom:40px;filter:drop-shadow(0 0 26px rgba(233,197,107,.45))}
+  #s6 .a{font-size:110px;font-weight:800;letter-spacing:-1px}
+  #s6 .b{font-size:170px;line-height:1;margin-top:-6px}
+  #s6 .rule{width:520px;height:4px;margin:46px 0 40px;background:linear-gradient(90deg,rgba(233,197,107,0),var(--gold-b),rgba(233,197,107,0));transform-origin:50% 50%}
+  #s6 .c{font-size:54px;font-weight:400;line-height:1.35;color:var(--ink)}
+
+  /* S7 CTA */
+  #s7 .badge{width:330px;height:330px;transform-origin:50% 50%}
+  #s7 .badge-wrap{width:330px;height:330px;margin-bottom:60px}
+  #s7 .badge .tooth{top:70px;width:90px;margin-left:-45px}
+  #s7 .badge .name{top:136px;font-size:70px;letter-spacing:7px;padding-left:7px}
+  #s7 .badge .sub{top:222px;font-size:16px;letter-spacing:8px;padding-left:8px}
+  #s7 .l1{font-size:92px}
+  #s7 .l2{font-size:132px}
+  #pillwrap{position:relative;margin-top:70px}
+  #pulse{position:absolute;inset:0;border-radius:90px;border:4px solid var(--wa)}
+  #pill{position:relative;display:flex;align-items:center;gap:30px;padding:30px 56px 30px 34px;border-radius:90px;
+    background:linear-gradient(180deg,#2fe074,#1fb457);box-shadow:0 20px 60px rgba(37,211,102,.35);color:#fff;text-align:left}
+  #pill .ic{width:104px;height:104px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+  #pill .t1{font-size:34px;font-weight:600;opacity:.95}
+  #pill .t2{font-size:62px;font-weight:900;letter-spacing:.5px}
+  #s7 .meta{margin-top:56px;font-size:44px;font-weight:600;color:var(--ink);display:flex;gap:44px}
+  #s7 .meta span{display:inline-flex;align-items:center;gap:12px}
+  #s7 .meta .g{color:var(--gold-b)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4cc"/><stop offset=".5" stop-color="#e9c56b"/><stop offset="1" stop-color="#b7882e"/></linearGradient>
+    <linearGradient id="gt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1bf"/><stop offset=".55" stop-color="#e2b95a"/><stop offset="1" stop-color="#a87a25"/></linearGradient>
+  </defs></svg>
+  <div id="glow"></div>
+  <div id="dust"></div>
+
+  <div id="cam">
+    <!-- S1: hook -->
+    <div class="scene" id="s1">
+      <span class="line black l1">Você</span>
+      <span class="line black l2">esconde</span>
+      <span class="line black l3">seu sorriso</span>
+      <span class="line black l4 gold">nas fotos?</span>
+      <span class="line emoji">😬</span>
+    </div>
+
+    <!-- S2: punch -->
+    <div id="white"></div>
+    <div class="scene" id="s2">
+      <span class="mask"><span class="line black w1">Isso</span></span>
+      <span class="mask"><span class="line black w2">acaba</span></span>
+      <span class="mask"><span class="line black w3 hoje"><span id="marker"></span><span class="txt">hoje.</span></span></span>
+      <span class="line sub">Seu novo sorriso começa aqui.</span>
+    </div>
+
+    <!-- S3: brand reveal -->
+    <div class="scene" id="s3">
+      <span class="line pre">Conheça a</span>
+      <div class="line badge" id="badge1"></div>
+      <span class="line post serif-i gold">Curitiba · PR</span>
+    </div>
+
+    <!-- S4: services -->
+    <div class="scene" id="s4">
+      <div class="label">TRATAMENTOS</div>
+      <div id="cards"></div>
+      <div id="pbar"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    </div>
+
+    <!-- S5: all specialties -->
+    <div class="scene" id="s5">
+      <span class="line black big l1">Todas as</span>
+      <span class="line black l2 gold">especialidades</span>
+      <span class="line l3 serif-i">em um só lugar</span>
+      <div id="chips"></div>
+    </div>
+
+    <!-- S6: humanized -->
+    <div class="scene" id="s6">
+      <svg viewBox="0 0 200 200"><defs><linearGradient id="gh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4cc"/><stop offset=".5" stop-color="#e9c56b"/><stop offset="1" stop-color="#b7882e"/></linearGradient></defs>
+        <path class="draw" fill="none" stroke="url(#gh)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"
+          d="M100 172 C 60 140 22 112 22 72 C 22 46 42 28 64 28 C 80 28 92 36 100 50 C 108 36 120 28 136 28 C 158 28 178 46 178 72 C 178 112 140 140 100 172 Z"/></svg>
+      <span class="mask"><span class="line a">Atendimento</span></span>
+      <span class="mask"><span class="line b serif-i gold">humanizado</span></span>
+      <div class="rule"></div>
+      <span class="line c">para realizar sonhos<br>através do <b>sorriso</b> 🤍</span>
+    </div>
+
+    <!-- S7: CTA -->
+    <div class="scene" id="s7">
+      <div class="badge-wrap"><div class="badge" id="badge2"></div></div>
+      <span class="line black l1">Agende sua</span>
+      <span class="line black l2 gold">avaliação</span>
+      <div id="pillwrap" class="line">
+        <div id="pulse"></div>
+        <div id="pill">
+          <div class="ic"><svg width="66" height="66" viewBox="0 0 32 32"><path fill="#25d366" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 6.9L3 29l6.5-2c1.9 1 4.1 1.6 6.5 1.6 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.3c-2.1 0-4.1-.6-5.8-1.7l-.4-.3-3.9 1.2 1.2-3.7-.3-.4c-1.2-1.7-1.9-3.8-1.9-5.9C4.9 9.8 9.9 5 16 5s11.1 4.8 11.1 10.8S22.1 26.3 16 26.3zm6.1-8c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 2-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3z"/></svg></div>
+          <div><div class="t1">Chame no WhatsApp</div><div class="t2">(41) 98414-4299</div></div>
+        </div>
+      </div>
+      <div class="line meta"><span><span class="g">@</span>salesodontologia_</span><span>📍 Curitiba</span></div>
+    </div>
+  </div>
+
+  <canvas id="grain" width="540" height="960"></canvas>
+  <div id="vignette"></div>
+  <div id="flash"></div>
+</div>
+
+<script>
+const W=1080,H=1920,BEAT=0.5,DUR=23;
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const prog=(t,s,d)=>clamp((t-s)/d);
+const lerp=(a,b,x)=>a+(b-a)*x;
+const eOut=x=>1-Math.pow(1-x,3);
+const eExpo=x=>x>=1?1:1-Math.pow(2,-10*x);
+const eIn=x=>x*x*x;
+const eInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+function rng(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646;};}
+
+function tf(el,{o=1,x=0,y=0,s=1,sx=null,r=0,b=0}={}){
+  el.style.opacity=o;
+  el.style.transform=`translate(${x}px,${y}px) scale(${sx===null?s:sx},${s}) rotate(${r}deg)`;
+  el.style.filter=b>0.2?`blur(${b.toFixed(1)}px)`:'none';
+}
+function vis(el,t,a,b){const v=t>=a&&t<b;el.style.display=v?'':'none';return v;}
+
+// "slam": comes from big & blurred, lands hard
+function slam(el,t,s0,from=2.2){
+  const p=prog(t,s0,0.2);
+  if(t<s0){el.style.opacity=0;return;}
+  tf(el,{o:clamp(p*3),s:lerp(from,1,eOut(p)),b:lerp(16,0,p)});
+}
+// mask rise: slides up from below its mask
+function rise(el,t,s0,d=0.35){
+  const p=eExpo(prog(t,s0,d));
+  tf(el,{o:t<s0?0:1,y:lerp(260,0,p)});
+}
+function fadeUp(el,t,s0,d=0.4,dist=40){
+  const p=eOut(prog(t,s0,d));
+  tf(el,{o:p,y:lerp(dist,0,p)});
+}
+function pop(el,t,s0,d=0.4){
+  const p=prog(t,s0,d);
+  tf(el,{o:clamp(p*4),s:t<s0?0.0001:lerp(0.3,1,eBack(p))});
+}
+
+/* ---------- build: badges ---------- */
+const toothLogo=`<svg class="tooth" viewBox="0 0 150 100"><path class="draw" fill="none" stroke="url(#gt)" stroke-width="9" stroke-linecap="round" d="M34 86 C14 62 14 22 42 16 C58 13 62 26 75 26 C88 26 92 13 108 16 C136 22 136 62 116 86"/></svg>`;
+function badgeHTML(){
+  return `<svg class="ring" viewBox="0 0 100 100"><circle class="draw" cx="50" cy="50" r="48.6" fill="none" stroke="#c9a14d" stroke-width="1.6"/></svg>
+  ${toothLogo}<div class="name">SALES</div><div class="sub">ODONTOLOGIA</div><div class="shine"></div>`;
+}
+$('#badge1').innerHTML=badgeHTML();
+$('#badge2').innerHTML=badgeHTML();
+
+/* ---------- build: service cards ---------- */
+const G=`stroke="url(#gs)" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"`;
+function prosthesis(){
+  // upper denture: gum arch + six teeth hanging along the smile curve
+  const gy=x=>86-34*Math.sin(Math.PI*(x-14)/172);
+  let d=`<path class="draw" ${G} d="M14 ${gy(14)-22} Q100 ${gy(100)-56} 186 ${gy(186)-22} L186 ${gy(186)} Q100 ${gy(100)-34} 14 ${gy(14)} Z"/>`;
+  const hs=[46,58,70,70,58,46];
+  for(let i=0;i<6;i++){
+    const x1=24+i*25.8, x2=x1+22, y1=gy(x1)+2, y2=gy(x2)+2, yb=Math.max(y1,y2)+hs[i];
+    d+=`<path class="draw" ${G} d="M${x1} ${y1} L${x1} ${yb-11} Q${x1} ${yb} ${x1+11} ${yb} Q${x2} ${yb} ${x2} ${yb-11} L${x2} ${y2}"/>`;
+  }
+  return `<g transform="translate(0 34)">${d}</g>`;
+}
+const services=[
+  {w:'Implantes', tag:'Volte a <b>sorrir e mastigar</b><br>com segurança', svg:
+    `<path class="draw" ${G} d="M58 44 C58 20 84 16 100 26 C116 16 142 20 142 44 C142 64 132 74 130 84 L70 84 C68 74 58 64 58 44 Z"/>
+     <path class="draw" ${G} d="M88 84 L88 100 L112 100 L112 84"/>
+     <path class="draw" ${G} d="M82 104 L118 104 L110 186 L90 186 Z"/>
+     <path class="draw" ${G} d="M80 122 L120 118 M83 140 L117 136 M86 158 L114 154 M88 174 L112 171"/>`},
+  {w:'Facetas', tag:'O sorriso <b>dos seus sonhos</b><br>em poucas sessões', svg:
+    `<path class="draw" ${G} d="M66 40 C66 28 78 22 100 22 C122 22 134 28 134 40 L130 118 C128 150 116 178 100 178 C84 178 72 150 70 118 Z"/>
+     <path class="draw" ${G} d="M84 46 C84 70 86 100 90 124"/>
+     <path class="draw" ${G} d="M160 26 L166 44 L184 50 L166 56 L160 74 L154 56 L136 50 L154 44 Z"/>
+     <path class="draw" ${G} d="M36 120 L39 130 L49 133 L39 136 L36 146 L33 136 L23 133 L33 130 Z"/>`},
+  {w:'Ortodontia', tag:'Dentes alinhados,<br><b>autoestima lá em cima</b>', svg:
+    `<path class="draw" ${G} d="M28 52 C28 40 40 34 60 34 C80 34 92 40 92 52 L88 130 C86 152 76 168 60 168 C44 168 34 152 32 130 Z"/>
+     <path class="draw" ${G} d="M108 52 C108 40 120 34 140 34 C160 34 172 40 172 52 L168 130 C166 152 156 168 140 168 C124 168 114 152 112 130 Z"/>
+     <path class="draw" ${G} d="M47 82 h26 v24 h-26 Z M127 82 h26 v24 h-26 Z"/>
+     <path class="draw" ${G} d="M10 94 L190 94"/>`},
+  {w:'Prótese', tag:'Conforto e <b>naturalidade</b><br>para o seu dia a dia', svg: prosthesis()},
+];
+$('#cards').innerHTML=services.map((s,i)=>`
+  <div class="card" id="c${i}">
+    <div class="num">0${i+1}</div>
+    <svg viewBox="0 0 200 200">${s.svg}</svg>
+    <span class="mask"><span class="line black word gold">${s.w}</span></span>
+    <span class="line tag">${s.tag}</span>
+  </div>`).join('');
+
+/* ---------- build: chips ---------- */
+const chipList=['Clareamento','Limpeza','Canal','Restaurações','Implantes','Facetas','Aparelho','Prótese'];
+$('#chips').innerHTML=chipList.map(c=>`<span class="chip line">${c}</span>`).join('');
+
+/* ---------- build: dust ---------- */
+const R=rng(7);
+const dust=[];
+for(let i=0;i<46;i++){
+  const d=document.createElement('div');d.className='dot';
+  const size=6+R()*22;
+  d.style.width=d.style.height=size+'px';
+  $('#dust').appendChild(d);
+  dust.push({el:d,x:R()*W,y:R()*H,sp:20+R()*60,ph:R()*6.28,amp:10+R()*30,tw:R()*6.28});
+}
+
+/* ---------- build: grain ---------- */
+const gctx=$('#grain').getContext('2d');
+const grains=[];
+for(let k=0;k<4;k++){
+  const img=gctx.createImageData(540,960);const r=rng(100+k);
+  for(let i=0;i<img.data.length;i+=4){const v=r()*255;img.data[i]=img.data[i+1]=img.data[i+2]=v;img.data[i+3]=255;}
+  grains.push(img);
+}
+
+/* ---------- prep: stroke drawing + text fit ---------- */
+$$('.draw').forEach(p=>{const L=p.getTotalLength();p.dataset.len=L;p.style.strokeDasharray=L;p.style.strokeDashoffset=L;});
+function draw(root,t,s0,d){
+  const ps=[...root.querySelectorAll('.draw')];
+  ps.forEach((p,i)=>{
+    const st=s0+i*d*0.18;
+    const k=eInOut(prog(t,st,d));
+    p.style.strokeDashoffset=p.dataset.len*(1-k);
+  });
+}
+function fit(el,max){
+  let fs=parseFloat(getComputedStyle(el).fontSize);
+  while(el.getBoundingClientRect().width>max&&fs>20){fs-=2;el.style.fontSize=fs+'px';}
+}
+$$('.black').forEach(el=>fit(el,960));
+
+/* ---------- timeline ---------- */
+const HITS=[0,0.5,1.0,1.5,3.0,3.25,3.5,5.0,7.0,8.5,10.0,11.5,13.0,13.25,15.0,17.5,18.3];
+const T={s1:[0,3],s2:[3,5],s3:[5,7],s4:[7,13],s5:[13,15],s6:[15,17.5],s7:[17.5,DUR+1]};
+
+function render(t){
+  /* background glow drifts; turns warmer in CTA */
+  const gx=50+12*Math.sin(t*0.35), gy=40+8*Math.cos(t*0.27);
+  const warm=t>17.5?0.32:0.22;
+  $('#glow').style.background=`radial-gradient(ellipse 55% 40% at ${gx}% ${gy}%, rgba(201,153,60,${warm}) 0%, rgba(201,153,60,0) 70%),
+    radial-gradient(ellipse 40% 30% at ${100-gx}% ${90-gy}%, rgba(120,90,40,.16) 0%, rgba(0,0,0,0) 70%), #0c0c0e`;
+
+  dust.forEach(d=>{
+    const y=((d.y-d.sp*t)%H+H)%H;
+    const x=d.x+Math.sin(t*0.8+d.ph)*d.amp;
+    d.el.style.transform=`translate(${x}px,${y}px)`;
+    d.el.style.opacity=(0.25+0.55*(0.5+0.5*Math.sin(t*2+d.tw))).toFixed(2);
+  });
+  gctx.putImageData(grains[Math.floor(t*24)%4],0,0);
+
+  /* camera: hit shake + gentle push-in per scene */
+  let sh=0;HITS.forEach(h=>{const dt=t-h;if(dt>=0&&dt<0.25)sh+=(1-dt/0.25)*14;});
+  const sx=Math.sin(t*93)*sh, sy=Math.cos(t*71)*sh;
+  let push=1;for(const k in T){const[a,b]=T[k];if(t>=a&&t<b)push=1+0.035*((t-a)/(b-a));}
+  let kick=0;HITS.forEach(h=>{const dt=t-h;if(dt>=0&&dt<0.2)kick+=0.03*(1-dt/0.2);});
+  $('#cam').style.transform=`translate(${sx}px,${sy}px) scale(${push+kick})`;
+
+  /* flash */
+  let fl=0;[[7.0,.55],[17.5,.9],[15.0,.35],[13.0,.3]].forEach(([h,a])=>{const dt=t-h;if(dt>=0&&dt<0.3)fl=Math.max(fl,a*(1-dt/0.3));});
+  $('#flash').style.opacity=fl;
+  $('#vignette').style.opacity=(t>=3.1&&t<4.75)?0.25:1;
+
+  /* ===== S1 hook ===== */
+  const s1=$('#s1');
+  if(vis(s1,t,0,3.0)){
+    slam($('#s1 .l1'),t,0.0,1.8);
+    slam($('#s1 .l2'),t,0.5);
+    slam($('#s1 .l3'),t,1.0);
+    slam($('#s1 .l4'),t,1.5,2.6);
+    const e=$('#s1 .emoji');const pe=prog(t,2.0,0.35);
+    tf(e,{o:t<2?0:1,s:t<2?0.001:eBack(pe),r:Math.sin(t*18)*8*(t>2.2?1:0)});
+    // zoom-through exit
+    const x=eIn(prog(t,2.6,0.4));
+    tf(s1,{o:1-x,s:1+x*2.5,b:x*20});
+  }
+
+  /* ===== S2 punch (white) ===== */
+  const wh=$('#white'), s2=$('#s2');
+  if(vis(wh,t,3.0,5.0)&vis(s2,t,3.0,5.0)){
+    const pr=eExpo(prog(t,3.0,0.3));
+    const out=eIn(prog(t,4.7,0.3));
+    wh.style.clipPath=`circle(${pr*1300}px at 50% 45%)`;
+    wh.style.transform=`translateY(${-out*H}px)`;
+    rise($('#s2 .w1'),t,3.0); rise($('#s2 .w2'),t,3.25); rise($('#s2 .w3'),t,3.5);
+    const m=eExpo(prog(t,3.75,0.35));
+    $('#marker').style.transform=`scaleX(${m})`;
+    fadeUp($('#s2 .sub'),t,4.0);
+    tf(s2,{y:-out*H});
+  }
+
+  /* ===== S3 brand reveal ===== */
+  const s3=$('#s3');
+  if(vis(s3,t,4.75,7.0)){
+    const b=$('#badge1');
+    fadeUp($('#s3 .pre'),t,5.0,0.35);
+    pop(b,t,5.0,0.5);
+    draw(b.querySelector('.ring'),t,5.05,0.7);
+    draw(b.querySelector('.tooth'),t,5.2,0.6);
+    const n=prog(t,5.45,0.5);
+    const nm=b.querySelector('.name');nm.style.opacity=n;nm.style.letterSpacing=lerp(40,12,eOut(n))+'px';
+    b.querySelector('.sub').style.opacity=eOut(prog(t,5.75,0.4));
+    b.querySelector('.shine').style.left=lerp(-200,760,eInOut(prog(t,6.15,0.6)))+'px';
+    fadeUp($('#s3 .post'),t,5.9,0.4);
+    const x=eIn(prog(t,6.8,0.2));
+    tf(s3,{o:1-x,x:-x*400,b:x*12});
+  }
+
+  /* ===== S4 services ===== */
+  const s4=$('#s4');
+  if(vis(s4,t,7.0,13.0)){
+    fadeUp($('#s4 .label'),t,7.0,0.3,20);
+    services.forEach((s,i)=>{
+      const c=$('#c'+i), st=7+i*1.5, en=st+1.5;
+      if(!vis(c,t,st,en))return;
+      const pin=eExpo(prog(t,st,0.3)), pout=eIn(prog(t,en-0.2,0.2));
+      tf(c,{x:lerp(W,0,pin)-pout*W, b:(1-pin)*28+pout*28});
+      draw(c.querySelector('svg'),t,st+0.08,0.55);
+      tf(c.querySelector('.num'),{o:0.9*eOut(prog(t,st+0.1,0.4)),y:lerp(-60,0,eOut(prog(t,st+0.1,0.5)))});
+      rise(c.querySelector('.word'),t,st+0.15);
+      fadeUp(c.querySelector('.tag'),t,st+0.4,0.35);
+      const ic=c.querySelector('svg');
+      const breath=1+0.03*Math.sin((t-st)*Math.PI*4);
+      ic.style.transform=`scale(${breath})`;
+    });
+    $$('#pbar b').forEach((b,i)=>{b.style.transform=`scaleX(${prog(t,7+i*1.5,1.5)})`;});
+    const out=eIn(prog(t,12.8,0.2));s4.style.opacity=1-out;
+  }
+
+  /* ===== S5 all specialties ===== */
+  const s5=$('#s5');
+  if(vis(s5,t,13.0,15.0)){
+    slam($('#s5 .l1'),t,13.0);
+    slam($('#s5 .l2'),t,13.25,2.6);
+    fadeUp($('#s5 .l3'),t,13.55,0.35);
+    $$('#chips .chip').forEach((c,i)=>pop(c,t,13.8+i*0.07,0.35));
+    const x=eIn(prog(t,14.8,0.2));tf(s5,{o:1-x,s:1+x*0.3});
+  }
+
+  /* ===== S6 humanized ===== */
+  const s6=$('#s6');
+  if(vis(s6,t,15.0,17.5)){
+    const hs=$('#s6 svg');
+    draw(hs,t,15.0,0.6);
+    const beat=(t>15.6)?Math.max(0,Math.sin(((t-15.5)%0.5)/0.5*Math.PI))*0.08:0;
+    hs.style.transform=`scale(${1+beat})`;
+    rise($('#s6 .a'),t,15.2); rise($('#s6 .b'),t,15.45,0.45);
+    $('#s6 .rule').style.transform=`scaleX(${eExpo(prog(t,15.8,0.5))})`;
+    fadeUp($('#s6 .c'),t,16.0,0.45);
+    const x=eIn(prog(t,17.3,0.2));tf(s6,{o:1-x,s:1-x*0.1});
+  }
+
+  /* ===== S7 CTA ===== */
+  const s7=$('#s7');
+  if(vis(s7,t,17.5,DUR+1)){
+    const bw=$('#s7 .badge-wrap'), b=$('#badge2');
+    pop(bw,t,17.5,0.5);
+    draw(b.querySelector('.ring'),t,17.5,0.7);
+    draw(b.querySelector('.tooth'),t,17.6,0.6);
+    b.querySelector('.name').style.opacity=eOut(prog(t,17.7,0.4));
+    b.querySelector('.sub').style.opacity=eOut(prog(t,17.9,0.4));
+    // recurring shine on the badge
+    const sp=((t-18.4)%2.5+2.5)%2.5;
+    b.querySelector('.shine').style.left=(t<18.4?-200:lerp(-200,520,eInOut(clamp(sp/0.7))))+'px';
+    slam($('#s7 .l1'),t,17.7,1.8);
+    slam($('#s7 .l2'),t,18.0,2.4);
+    pop($('#pillwrap'),t,18.3,0.5);
+    // pill heartbeat + expanding pulse ring
+    const pill=$('#pill');
+    const k=t>19?((t-19)%1.0):1;
+    pill.style.transform=`scale(${1+0.05*Math.max(0,Math.sin(clamp(k/0.25)*Math.PI))})`;
+    const pr=t>19?((t-19)%1.0)/1.0:1;
+    const pu=$('#pulse');pu.style.opacity=t>19?(1-pr)*0.9:0;pu.style.transform=`scale(${1+pr*0.25},${1+pr*0.6})`;
+    fadeUp($('#s7 .meta'),t,18.7,0.4);
+  }
+}
+window.render=render;
+window.DUR=DUR;
+render(0);
+</script>
+</body>
+</html>
