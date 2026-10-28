@@ -31,28 +31,28 @@
   #qb img{width:64px;height:64px}
   #think{position:absolute;right:90px;top:560px;width:200px;height:200px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.4))}
   /* stamp */
-  #stamp{position:absolute;left:50%;top:1060px;font-size:170px;font-weight:900;letter-spacing:-2px;padding:6px 50px 14px;border:16px solid;border-radius:36px;
+  #stamp{position:absolute;left:50%;top:1220px;font-size:130px;font-weight:900;letter-spacing:-2px;padding:6px 50px 14px;border:16px solid;border-radius:36px;
     background:rgba(255,255,255,.95);white-space:nowrap;box-shadow:0 20px 50px rgba(0,0,0,.35)}
   #stamp img{width:150px;height:150px;vertical-align:-24px;margin-left:16px}
   /* example cards */
-  .ex{position:absolute;left:190px;width:700px;top:860px;border-radius:44px;background:rgba(255,255,255,.96);color:#14213d;box-shadow:0 24px 60px rgba(0,0,0,.4);
+  .ex{position:absolute;left:240px;width:600px;top:1040px;border-radius:44px;background:rgba(255,255,255,.96);color:#14213d;box-shadow:0 24px 60px rgba(0,0,0,.4);
     padding:30px 34px 34px;text-align:center;transform-origin:50% 100%}
-  .ex .lb{font-size:48px;font-weight:900;letter-spacing:-1px;text-transform:uppercase;line-height:1.05;margin-top:14px}
+  .ex .lb{font-size:42px;font-weight:900;letter-spacing:-1px;text-transform:uppercase;line-height:1.05;margin-top:14px}
   .ex .sb{font-family:'Inter',sans-serif;font-size:34px;font-weight:600;color:#55607a;margin-top:6px}
   .ex .row{display:flex;justify-content:center;gap:16px}
-  .ex .row img{width:120px;height:120px}
-  .ex svg{width:620px;height:282px;overflow:visible}
-  .meter{display:flex;justify-content:center;gap:70px;align-items:flex-end;height:300px}
+  .ex .row img{width:96px;height:96px}
+  .ex svg{width:530px;height:241px;overflow:visible}
+  .meter{display:flex;justify-content:center;gap:60px;align-items:flex-end;height:250px}
   .meter .col{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:34px;font-weight:900}
   .meter .bar{width:130px;border-radius:24px 24px 10px 10px;transform-origin:50% 100%}
   .meter img{width:96px;height:96px}
-  .big2{display:flex;justify-content:center;align-items:center;gap:30px;height:240px}
-  .big2 img{width:200px;height:200px}
+  .big2{display:flex;justify-content:center;align-items:center;gap:26px;height:190px}
+  .big2 img{width:160px;height:160px}
   .big2 .plus{font-size:90px;font-weight:900;color:#c9993c}
   .ban{position:relative;width:200px;height:200px}
   .ban img{position:absolute;inset:0;width:200px;height:200px}
   /* link-in-bio card */
-  #exLink{left:90px;width:900px}
+  #exLink{left:140px;width:800px;top:1000px}
   #exLink .wa svg{width:62px;height:62px}
   #exLink .prof{display:flex;align-items:center;gap:26px;text-align:left}
   #exLink .badge{margin:0;width:150px;height:150px}
@@ -64,7 +64,7 @@
   #exLink .wa{margin:26px auto 0;justify-content:center}
   #tap{position:absolute;width:90px;height:90px;border-radius:50%;border:5px solid #0a66ff;background:rgba(10,102,255,.2)}
   /* captions */
-  #cap{position:absolute;left:60px;right:60px;top:1400px;text-align:center;font-family:'Inter',sans-serif;font-weight:900;font-size:92px;line-height:1.05;
+  #cap{position:absolute;left:60px;right:60px;top:1500px;text-align:center;font-family:'Inter',sans-serif;font-weight:900;font-size:80px;line-height:1.05;
     -webkit-text-stroke:16px #000;paint-order:stroke fill;text-shadow:0 6px 0 rgba(0,0,0,.6);letter-spacing:-1px}
   /* end card */
   #end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:200px;text-align:center;background:rgba(8,8,12,.55)}
@@ -143,7 +143,7 @@ const inWin=(t,w)=>w.find(([a,z])=>t>=a&&t<z);
 async function render(t){
   await setFrame(t);
   // camera: slow push during answers + punch on every stamp / question start
-  let push=0;ANSWERS.forEach(([a,z])=>{if(t>=a&&t<z)push=0.07*eInOut((t-a)/(z-a));});
+  let push=0;ANSWERS.forEach(([a,z])=>{if(t>=a&&t<z)push=0.04*eInOut((t-a)/(z-a));});
   const punch=pulses(t,[...STAMPS.map(s=>s[0]),...QWIN.map(q=>q[0]),0],0.3,0.06);
   vid.style.transform=`scale(${1+push+punch})`;
   vid.style.filter=t>SRC_DUR?`blur(${Math.min(18,(t-SRC_DUR)*30)}px)`:'none';
