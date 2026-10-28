@@ -1,5 +1,6 @@
 // Renders reel.html frame-by-frame into an MP4 (silent) via ffmpeg.
 // Usage: node render.js [out.mp4] | node render.js --stills t1,t2,...
+// Set PAGE=reel2.html to render another composition.
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const path = require('path');
@@ -8,7 +9,7 @@ const FPS = 30;
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
-  await page.goto('file://' + path.resolve(__dirname, 'reel.html'));
+  await page.goto('file://' + path.resolve(__dirname, process.env.PAGE || 'reel.html'));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(300);
   const stage = await page.$('#stage');
@@ -16,7 +17,7 @@ const FPS = 30;
   if (process.argv[2] === '--stills') {
     for (const t of process.argv[3].split(',').map(Number)) {
       await page.evaluate(t => render(t), t);
-      await stage.screenshot({ path: `stills/t${t.toFixed(2)}.png` });
+      await stage.screenshot({ path: `stills/${process.env.PAGE ? path.basename(process.env.PAGE, '.html') + '_' : ''}t${t.toFixed(2)}.png` });
     }
     await browser.close();
     return;

@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Odontologia – Reels v2</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root{--cream:#f5efe3;--ink:#141414;--gold:#c9993c;--gold-l:#e9c56b;--lip:#cf5b67;--wa:#25d366}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--cream);
+    font-family:'Montserrat',sans-serif;color:var(--ink)}
+  #cam{position:absolute;inset:0;transform-origin:50% 46%}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding-bottom:170px;text-align:center}
+  .line{display:inline-block;white-space:nowrap;will-change:transform,opacity}
+  .x{font-weight:900;text-transform:uppercase;letter-spacing:-3px;line-height:.95}
+  .serif{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;letter-spacing:0;text-transform:none}
+  .goldtxt{background:linear-gradient(180deg,#f3d88f 0%,#d4a646 45%,#9f7426 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  #grid{position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(20,20,20,.05) 2px,transparent 2px),linear-gradient(90deg,rgba(20,20,20,.05) 2px,transparent 2px);
+    background-size:120px 120px}
+  #grain{position:absolute;inset:0;width:1080px;height:1920px;opacity:.09;mix-blend-mode:multiply;pointer-events:none}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+  /* stories-style progress + brand strip */
+  #prog{position:absolute;left:60px;right:60px;top:200px;height:8px;border-radius:8px;background:rgba(20,20,20,.12);overflow:hidden}
+  #prog b{position:absolute;inset:0;background:var(--ink);transform-origin:0 50%}
+  #brand{position:absolute;top:236px;left:0;right:0;font-size:28px;font-weight:700;letter-spacing:10px;display:flex;justify-content:center;gap:16px;align-items:center}
+  #brand svg{width:40px;height:28px}
+
+  /* S1 hook */
+  #s1 .w{font-size:170px}
+  #tape{display:inline-block;background:var(--ink);color:var(--cream);padding:18px 40px 26px;margin-top:22px;transform-origin:50% 50%}
+  #tape .x{font-size:140px}
+  #s1 .emo{font-size:230px;margin-top:40px;font-family:'Noto Color Emoji';position:relative}
+  #slash{position:absolute;left:50%;top:50%;width:320px;height:320px;margin:-160px 0 0 -160px;overflow:visible}
+
+  /* S2 before/after */
+  #s2 .head{display:flex;gap:40px;align-items:center;font-size:58px;font-weight:900;letter-spacing:6px;margin-bottom:40px}
+  #s2 .head .st{color:var(--gold);font-size:50px}
+  #smile{width:1000px;height:560px;overflow:visible}
+  #s2 .cap{margin-top:30px;font-size:96px}
+  #s2 .note{position:absolute;bottom:250px;right:70px;font-size:24px;color:rgba(20,20,20,.5);font-weight:600}
+  .lbl{position:absolute;top:0;font-size:30px;font-weight:800;letter-spacing:6px;padding:10px 20px;border-radius:40px}
+
+  /* S3 reasons */
+  .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:170px}
+  .rc .kick{font-size:34px;font-weight:800;letter-spacing:12px;margin-bottom:10px}
+  .rc .n{font-size:520px;font-weight:900;line-height:.82;letter-spacing:-20px;color:transparent;-webkit-text-stroke:6px currentColor}
+  .rc .t1{font-size:116px;margin-top:40px}
+  .rc .t2{font-size:96px;margin-top:4px}
+  #r0{background:var(--ink);color:var(--cream)} #r0 .n{-webkit-text-stroke-color:var(--gold-l)}
+  #r1{background:linear-gradient(160deg,#ebc976,#c9993c);color:var(--ink)}
+  #r2{background:var(--cream);color:var(--ink)} #r2 .n{-webkit-text-stroke-color:var(--gold)}
+  #band{position:absolute;left:-200px;right:-200px;top:1380px;height:110px;background:var(--ink);transform:rotate(-6deg);overflow:hidden;
+    border-top:4px solid var(--gold-l);border-bottom:4px solid var(--gold-l)}
+  #band .track{position:absolute;top:22px;white-space:nowrap;font-size:56px;font-weight:900;color:var(--cream);letter-spacing:2px}
+  #band .track i{color:var(--gold-l);font-style:normal;margin:0 30px}
+  #r1 ~ #band{}
+
+  /* S4 strobe */
+  .sw{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:170px}
+  .sw .x{font-size:170px}
+  .sw .sm{font-size:40px;font-weight:700;letter-spacing:14px;margin-bottom:26px;opacity:.7}
+
+  /* S5 phone CTA */
+  #s5{justify-content:flex-start;padding-top:300px}
+  #s5 .t{font-size:120px}
+  #phone{position:relative;width:600px;height:880px;margin-top:40px;border-radius:70px;background:#111;padding:18px;
+    box-shadow:0 40px 90px rgba(0,0,0,.35)}
+  #screen{position:relative;width:100%;height:100%;border-radius:54px;overflow:hidden;background:#ece5dd;
+    background-image:radial-gradient(rgba(0,0,0,.05) 2px,transparent 2px);background-size:26px 26px;text-align:left}
+  #notch{position:absolute;top:14px;left:50%;width:160px;height:38px;margin-left:-80px;border-radius:20px;background:#111;z-index:3}
+  #chead{position:absolute;top:0;left:0;right:0;height:170px;background:#075e54;display:flex;align-items:flex-end;gap:20px;padding:0 28px 22px;color:#fff}
+  #chead .av{width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#777,#2a2a2a);border:3px solid var(--gold-l);
+    display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:19px;color:#eee;letter-spacing:1px}
+  #chead .nm{font-size:32px;font-weight:700}
+  #chead .on{font-size:22px;opacity:.85}
+  #msgs{position:absolute;top:190px;left:22px;right:22px;bottom:110px;display:flex;flex-direction:column;justify-content:flex-end;gap:16px}
+  .bub{max-width:88%;padding:18px 24px 26px;border-radius:24px;font-size:30px;line-height:1.3;position:relative;box-shadow:0 2px 2px rgba(0,0,0,.08);transform-origin:0 100%}
+  .in{background:#fff;align-self:flex-start;border-top-left-radius:6px}
+  .out{background:#dcf8c6;align-self:flex-end;border-top-right-radius:6px;transform-origin:100% 100%}
+  .bub .tm{position:absolute;right:16px;bottom:6px;font-size:18px;color:#7a8a80}
+  .bub .tk{color:#34b7f1}
+  #inbar{position:absolute;left:18px;right:18px;bottom:20px;height:76px;display:flex;gap:14px}
+  #inbar .f{flex:1;background:#fff;border-radius:40px;font-size:28px;padding:20px 28px;color:#222;white-space:nowrap;overflow:hidden}
+  #inbar .f .ph{color:#999}
+  #inbar .cur{display:inline-block;width:3px;height:30px;background:#075e54;vertical-align:-5px;margin-left:2px}
+  #inbar .snd{width:76px;height:76px;border-radius:50%;background:#128c7e;display:flex;align-items:center;justify-content:center}
+  #s5 .num{margin-top:40px;display:flex;align-items:center;gap:22px;background:var(--wa);color:#fff;padding:22px 46px;border-radius:80px;
+    font-size:60px;font-weight:900;box-shadow:0 18px 50px rgba(37,211,102,.35)}
+  #s5 .meta{margin-top:26px;font-size:40px;font-weight:700}
+  #s5 .meta b{color:var(--gold)}
+  #tapdot{position:absolute;width:90px;height:90px;border-radius:50%;background:rgba(0,0,0,.25);border:4px solid rgba(255,255,255,.8);pointer-events:none;z-index:5}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <linearGradient id="tw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ece8df"/></linearGradient>
+    <linearGradient id="ty" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8d49a"/><stop offset="1" stop-color="#c8ac68"/></linearGradient>
+    <linearGradient id="lipg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e07481"/><stop offset="1" stop-color="#b6434f"/></linearGradient>
+    <linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d88f"/><stop offset="1" stop-color="#b7882e"/></linearGradient>
+  </defs></svg>
+  <div id="grid"></div>
+
+  <div id="cam">
+    <!-- S1 hook -->
+    <div class="scene" id="s1">
+      <span class="line x w w1">Pare de</span>
+      <span class="line x w w2">esconder</span>
+      <span id="tape" class="line"><span class="x">seu sorriso</span></span>
+      <span class="line emo">🤭<svg id="slash" viewBox="0 0 320 320"><circle class="draw" cx="160" cy="160" r="140" fill="none" stroke="#e0383e" stroke-width="22"/><path class="draw" d="M62 62 L258 258" stroke="#e0383e" stroke-width="22" stroke-linecap="round"/></svg></span>
+    </div>
+
+    <!-- S2 before/after slider -->
+    <div class="scene" id="s2">
+      <div class="head line"><span class="h1">ANTES</span><span class="st">✦</span><span class="h2">DEPOIS</span></div>
+      <svg id="smile" viewBox="0 0 600 330"></svg>
+      <span class="line cap x serif goldtxt">pode ser você ✨</span>
+      <div class="note">*imagem ilustrativa</div>
+    </div>
+
+    <!-- S3 reasons -->
+    <div class="scene" id="s3" style="padding:0">
+      <div class="rc" id="r0"><div class="kick line">POR QUE A SALES?</div><div class="n line">1</div><span class="line x t1">Todas as</span><span class="line x t2 goldtxt">especialidades</span></div>
+      <div class="rc" id="r1"><div class="kick line">POR QUE A SALES?</div><div class="n line">2</div><span class="line x t1">Atendimento</span><span class="line x t2 serif">humanizado</span></div>
+      <div class="rc" id="r2"><div class="kick line">POR QUE A SALES?</div><div class="n line">3</div><span class="line x t1">3 anos</span><span class="line x t2 serif goldtxt">realizando sonhos</span></div>
+      <div id="band"><div class="track"></div></div>
+    </div>
+
+    <!-- S4 strobe -->
+    <div class="scene" id="s4" style="padding:0"></div>
+
+    <!-- S5 phone CTA -->
+    <div class="scene" id="s5">
+      <span class="line x t">Agende <span class="goldtxt">agora</span></span>
+      <div id="phone" class="line">
+        <div id="screen">
+          <div id="notch"></div>
+          <div id="chead"><div class="av">SALES</div><div><div class="nm">Sales Odontologia</div><div class="on">online</div></div></div>
+          <div id="msgs">
+            <div class="bub in" id="m1">Olá! 😊 Como podemos te ajudar?<span class="tm">10:02</span></div>
+            <div class="bub out" id="m2">Quero agendar minha avaliação! 😁<span class="tm">10:03 <span class="tk">✓✓</span></span></div>
+            <div class="bub in" id="m3">Claro! Vamos cuidar do seu sorriso 🦷✨<span class="tm">10:03</span></div>
+          </div>
+          <div id="inbar"><div class="f"><span id="typed"></span><span class="cur"></span><span class="ph" id="ph">Mensagem</span></div>
+            <div class="snd"><svg width="36" height="36" viewBox="0 0 24 24"><path fill="#fff" d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></div></div>
+        </div>
+      </div>
+      <div class="num line"><svg width="56" height="56" viewBox="0 0 32 32"><path fill="#fff" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 6.9L3 29l6.5-2c1.9 1 4.1 1.6 6.5 1.6 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.3c-2.1 0-4.1-.6-5.8-1.7l-.4-.3-3.9 1.2 1.2-3.7-.3-.4c-1.2-1.7-1.9-3.8-1.9-5.9C4.9 9.8 9.9 5 16 5s11.1 4.8 11.1 10.8S22.1 26.3 16 26.3zm6.1-8c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 2-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3z"/></svg>(41) 98414-4299</div>
+      <div class="meta line"><b>@</b>salesodontologia_ · 📍 Curitiba-PR</div>
+      <div id="tapdot"></div>
+    </div>
+  </div>
+
+  <div id="prog"><b></b></div>
+  <div id="brand"><svg viewBox="0 0 150 100"><path fill="none" stroke="url(#gg)" stroke-width="12" stroke-linecap="round" d="M34 86 C14 62 14 22 42 16 C58 13 62 26 75 26 C88 26 92 13 108 16 C136 22 136 62 116 86"/></svg>SALES ODONTOLOGIA</div>
+  <canvas id="grain" width="540" height="960"></canvas>
+  <div id="flash"></div>
+</div>
+
+<script>
+const W=1080,H=1920,B=60/130;           // 130 BPM, everything is on the beat grid
+const b=n=>n*B;
+const DUR=b(48)+0.7;
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const clamp=(x,a=0,c=1)=>Math.min(c,Math.max(a,x));
+const prog=(t,s,d)=>clamp((t-s)/d);
+const lerp=(a,c,x)=>a+(c-a)*x;
+const eOut=x=>1-Math.pow(1-x,3), eIn=x=>x*x*x;
+const eExpo=x=>x>=1?1:1-Math.pow(2,-10*x);
+const eInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=2.2,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+function rng(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646;};}
+function tf(el,{o=1,x=0,y=0,s=1,r=0,bl=0}={}){
+  el.style.opacity=o;el.style.transform=`translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`;
+  el.style.filter=bl>0.2?`blur(${bl.toFixed(1)}px)`:'none';}
+function vis(el,t,a,c){const v=t>=a&&t<c;el.style.display=v?'':'none';return v;}
+// stamp: drops in big and rotated, overshoots, lands
+function stamp(el,t,s0,rot=-6,d=0.28){
+  if(t<s0){el.style.opacity=0;return;}
+  const p=prog(t,s0,d);tf(el,{o:clamp(p*4),s:lerp(1.9,1,eBack(p)),r:lerp(rot*3,rot*0.4,eOut(p))});
+}
+function upIn(el,t,s0,d=0.3,dist=120){const p=eExpo(prog(t,s0,d));tf(el,{o:t<s0?0:clamp(p*2),y:lerp(dist,0,p)});}
+function pop(el,t,s0,d=0.35){const p=prog(t,s0,d);tf(el,{o:clamp(p*4),s:t<s0?0.001:lerp(0.2,1,eBack(p))});}
+
+/* ---------- smile illustration ---------- */
+(function buildSmile(){
+  const lipsOuter="M10 165 C 80 60 200 40 300 76 C 400 40 520 60 590 165 C 520 300 400 326 300 326 C 200 326 80 300 10 165 Z";
+  const opening="M58 165 C 150 118 230 112 300 122 C 370 112 450 118 542 165 C 450 252 370 274 300 274 C 230 274 150 252 58 165 Z";
+  const tooth=(x,y,w,h,r,up)=>up
+    ?`M${x} ${y} L${x} ${y+h-r} Q${x} ${y+h} ${x+r} ${y+h} L${x+w-r} ${y+h} Q${x+w} ${y+h} ${x+w} ${y+h-r} L${x+w} ${y} Z`
+    :`M${x} ${y+h} L${x} ${y+r} Q${x} ${y} ${x+r} ${y} L${x+w-r} ${y} Q${x+w} ${y} ${x+w} ${y+r} L${x+w} ${y+h} Z`;
+  function row(kind){
+    const R=rng(kind==='before'?11:12);
+    const uw=[46,52,58,70,70,58,52,46], lw=[40,44,48,52,52,48,44,40];
+    let s='', x=300-(uw.reduce((a,c)=>a+c)+7*5)/2;
+    uw.forEach((w,i)=>{
+      const xc=x+w/2, curve=Math.sin(Math.PI*clamp((xc-58)/484));
+      const top=96, h=60+44*curve;
+      const bad=kind==='before';
+      const rot=bad?(R()-.5)*14:0, dy=bad?(R()-.5)*12:0;
+      const fill=bad?(i===2?'#b99a55':'url(#ty)'):'url(#tw)';
+      s+=`<path d="${tooth(x,top+dy,w,h,16,true)}" fill="${fill}" stroke="${bad?'#9c8045':'#d8d2c4'}" stroke-width="2.5" transform="rotate(${rot} ${xc} ${top+h/2})"/>`;
+      if(!bad) s+=`<path d="M${x+10} ${top+30} L${x+10} ${top+h-22}" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".9"/>`;
+      x+=w+5;
+    });
+    x=300-(lw.reduce((a,c)=>a+c)+7*5)/2;
+    lw.forEach((w,i)=>{
+      const xc=x+w/2, curve=Math.sin(Math.PI*clamp((xc-58)/484));
+      const top=212-24*curve+ (kind==='before'?(i%2?6:-4):0), h=90;
+      const bad=kind==='before';
+      const rot=bad?(R()-.5)*16:0;
+      s+=`<path d="${tooth(x,top,w,h,14,false)}" fill="${bad?'url(#ty)':'url(#tw)'}" stroke="${bad?'#9c8045':'#d8d2c4'}" stroke-width="2.5" transform="rotate(${rot} ${xc} ${top+40})"/>`;
+      x+=w+5;
+    });
+    return s;
+  }
+  $('#smile').innerHTML=`
+    <defs><clipPath id="mouth"><path d="${opening}"/></clipPath><clipPath id="reveal"><rect id="revr" x="600" y="-20" width="0" height="370"/></clipPath></defs>
+    <path d="${lipsOuter}" fill="url(#lipg)"/>
+    <path d="M120 105 C 190 78 250 74 290 92" stroke="#f3a1aa" stroke-width="10" fill="none" stroke-linecap="round" opacity=".7"/>
+    <path d="${opening}" fill="#3b0d14"/>
+    <g clip-path="url(#mouth)">
+      <path d="M40 80 L560 80 L560 132 C 450 112 370 104 300 112 C 230 104 150 112 40 132 Z" fill="#e8818c"/>
+      <g id="before">${row('before')}</g>
+      <g clip-path="url(#reveal)"><g id="after">${row('after')}</g></g>
+    </g>
+    <path d="${opening}" fill="none" stroke="#a83a46" stroke-width="5"/>
+    <g id="spark" fill="#fff" stroke="#e9c56b" stroke-width="3">
+      <path d="M470 60 l8 22 22 8 -22 8 -8 22 -8 -22 -22 -8 22 -8z"/><path d="M110 250 l6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6z"/><path d="M330 20 l5 13 13 5 -13 5 -5 13 -5 -13 -13 -5 13 -5z"/>
+    </g>
+    <g id="handle"><line x1="0" y1="-10" x2="0" y2="340" stroke="#fff" stroke-width="6"/>
+      <circle cx="0" cy="165" r="36" fill="#141414" stroke="#fff" stroke-width="5"/>
+      <path d="M-8 152 L-20 165 L-8 178 M8 152 L20 165 L8 178" stroke="#e9c56b" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+})();
+
+/* ---------- strobe words ---------- */
+const STROBE=[['IMPLANTES','#141414','#f5efe3'],['FACETAS','#c9993c','#141414'],['ORTODONTIA','#f5efe3','#141414'],['PRÓTESE','#141414','#e9c56b'],
+  ['CLAREAMENTO','#e9c56b','#141414'],['LIMPEZA','#f5efe3','#141414'],['CANAL','#141414','#f5efe3'],['E MUITO+','#c9993c','#141414']];
+$('#s4').innerHTML=STROBE.map(([w,bg,fg],i)=>`<div class="sw" id="sw${i}" style="background:${bg};color:${fg}"><div class="sm line">TRATAMENTOS · 0${i+1}</div><span class="line x">${w}</span></div>`).join('');
+$('#band .track').innerHTML=Array(4).fill('IMPLANTES<i>✦</i>FACETAS<i>✦</i>ORTODONTIA<i>✦</i>PRÓTESE<i>✦</i>CLAREAMENTO<i>✦</i>').join('');
+
+/* ---------- prep ---------- */
+$$('.draw').forEach(p=>{const L=p.getTotalLength();p.dataset.len=L;p.style.strokeDasharray=L;p.style.strokeDashoffset=L;});
+function fit(el,max){let fs=parseFloat(getComputedStyle(el).fontSize);while(el.getBoundingClientRect().width>max&&fs>20){fs-=2;el.style.fontSize=fs+'px';}}
+$$('.x').forEach(el=>fit(el,960));
+const gctx=$('#grain').getContext('2d');const grains=[];
+for(let k=0;k<4;k++){const img=gctx.createImageData(540,960);const r=rng(50+k);
+  for(let i=0;i<img.data.length;i+=4){const v=150+r()*105;img.data[i]=img.data[i+1]=img.data[i+2]=v;img.data[i+3]=255;}grains.push(img);}
+const TYPE='Quero agendar minha avaliação! 😁';
+
+/* ---------- timeline (beats) ---------- */
+const S={s1:[0,6],s2:[6,16],s3:[16,28],s4:[28,36],s5:[36,99]};
+const HITS=[0,1,2,3,6,16,20,24,28,29,30,31,32,33,34,35,36,41.5];
+
+function render(t){
+  const bt=t/B;
+  gctx.putImageData(grains[Math.floor(t*24)%4],0,0);
+  $('#prog b').style.transform=`scaleX(${clamp(t/DUR)})`;
+  // brand strip + progress readable on any background
+  const onDark=(bt>=16&&bt<20)||(bt>=28&&bt<36&&[0,3,6].includes(Math.floor(bt-28)));
+  $('#brand').style.color=onDark?'#f5efe3':'#141414';
+  $('#prog').style.background=onDark?'rgba(255,255,255,.2)':'rgba(20,20,20,.12)';
+  $('#prog b').style.background=onDark?'#f5efe3':'#141414';
+  $('#brand').style.opacity=bt<6?0:1;
+
+  // camera punch on every hit + a constant tiny beat bounce
+  let k=0,sh=0;HITS.forEach(h=>{const dt=t-b(h);if(dt>=0&&dt<0.22){k+=0.05*(1-dt/0.22);sh+=12*(1-dt/0.22);}});
+  const bounce=0.006*Math.max(0,Math.cos((bt%1)*Math.PI*2));
+  $('#cam').style.transform=`translate(${Math.sin(t*97)*sh}px,${Math.cos(t*83)*sh}px) scale(${1+k+bounce})`;
+  let fl=0;[[6,.8],[16,.5],[36,.6]].forEach(([h,a])=>{const dt=t-b(h);if(dt>=0&&dt<0.25)fl=Math.max(fl,a*(1-dt/0.25));});
+  $('#flash').style.opacity=fl;
+
+  /* S1 hook */
+  const s1=$('#s1');
+  if(vis(s1,t,0,b(6))){
+    stamp($('.w1'),t,0,-4); stamp($('.w2'),t,b(1),3); stamp($('#tape'),t,b(2),-3);
+    const e=$('#s1 .emo');pop(e,t,b(3),0.35);
+    $$('#slash .draw').forEach((p,i)=>{p.style.strokeDashoffset=p.dataset.len*(1-eOut(prog(t,b(4)+i*0.12,0.28)));});
+    if(t>b(4.6)){e.style.transform+=` rotate(${Math.sin(t*40)*4}deg)`;}
+    // whip up exit
+    const x=eIn(prog(t,b(5.4),b(0.6)));tf(s1,{y:-x*H*0.9,bl:x*30,o:1-x*0.5});
+  }
+
+  /* S2 before / after */
+  const s2=$('#s2');
+  if(vis(s2,t,b(5.7),b(16))){
+    const pin=eExpo(prog(t,b(5.7),0.45));tf(s2,{y:(1-pin)*H*0.9,bl:(1-pin)*30});
+    stamp($('#s2 .head'),t,b(6.2),0,0.3);
+    $('#s2 .h1').style.color=bt<9?'#141414':'#b5ad9f';
+    $('#s2 .h2').style.color=bt>=9?'#141414':'#b5ad9f';
+    // slider: sweep 0→55% (beats 7-9), wiggle, then all the way (11-12.5)
+    let p=0;
+    p+=0.55*eInOut(prog(bt,7,2));
+    p+=-0.12*Math.sin(Math.PI*prog(bt,9.2,1.4));
+    p+=0.45*eInOut(prog(bt,11,1.5));
+    p=clamp(p);
+    const X=600-p*600;                       // handle travels right→left; "depois" grows from the right
+    $('#revr').setAttribute('x',X);$('#revr').setAttribute('width',600-X);
+    const hd=$('#handle');hd.setAttribute('transform',`translate(${X} 0)`);hd.style.opacity=bt<6.5?0:(1-prog(bt,12.5,0.5));
+    const sp=prog(bt,12.4,0.5);
+    $$('#spark path').forEach((s,i)=>{const q=clamp(sp*1.4-i*0.2);const tw=1+0.15*Math.sin(t*12+i);
+      const bb=s.getBBox?null:null;s.style.transformBox='fill-box';s.style.transformOrigin='50% 50%';s.style.transform=`scale(${eBack(q)*tw})`;s.style.opacity=q>0?1:0;});
+    stamp($('#s2 .cap'),t,b(13),-3,0.3);
+    const smile=$('#smile');const breathe=1+0.02*Math.sin(bt*Math.PI);smile.style.transform=`scale(${breathe})`;
+    const x=eIn(prog(t,b(15.6),b(0.4)));if(x>0)tf(s2,{s:1+x*2.2,o:1-x,bl:x*20});
+  }
+
+  /* S3 reasons: vertical whip between colored cards */
+  const s3=$('#s3');
+  if(vis(s3,t,b(16),b(28))){
+    [0,1,2].forEach(i=>{
+      const c=$('#r'+i), st=b(16+i*4), en=b(20+i*4);
+      if(!vis(c,t,st,en+(i<2?0.001:0)))return;
+      const pin=i===0?1:eExpo(prog(t,st,0.35));
+      tf(c,{y:(1-pin)*H,bl:(1-pin)*40});
+      upIn(c.querySelector('.kick'),t,st+0.05,0.3,40);
+      const n=c.querySelector('.n');const pn=prog(t,st+0.08,0.35);
+      tf(n,{o:clamp(pn*3),s:lerp(0.4,1,eBack(pn)),r:lerp(-25,0,eOut(pn))});
+      stamp(c.querySelector('.t1'),t,st+b(1),-2,0.26);
+      stamp(c.querySelector('.t2'),t,st+b(1.5),2,0.26);
+    });
+    const band=$('#band');band.style.display=bt<27.5?'':'none';
+    band.querySelector('.track').style.transform=`translateX(${-((t*260)%1600)}px)`;
+    tf(band,{o:1,y:lerp(300,0,eExpo(prog(bt,16.5,1))),r:-6});
+  }
+
+  /* S4 strobe: one word per beat */
+  const s4=$('#s4');
+  if(vis(s4,t,b(28),b(36))){
+    STROBE.forEach((_,i)=>{
+      const el=$('#sw'+i);if(!vis(el,t,b(28+i),b(29+i)))return;
+      const p=prog(t,b(28+i),0.18);
+      const w=el.querySelector('.x');tf(w,{s:lerp(1.5,1,eOut(p))+0.04*prog(t,b(28+i),B),bl:lerp(10,0,p),r:i%2?2:-2});
+      tf(el.querySelector('.sm'),{o:.7*eOut(p),y:lerp(-30,0,eOut(p))});
+    });
+  }
+
+  /* S5 phone CTA */
+  const s5=$('#s5');
+  if(vis(s5,t,b(36),DUR+1)){
+    stamp($('#s5 .t'),t,b(36),-3,0.3);
+    const ph=$('#phone');const pp=eExpo(prog(t,b(36.3),0.5));tf(ph,{y:(1-pp)*900,r:(1-pp)*8});
+    pop($('#m1'),t,b(37),0.3);
+    // typing beats 38 → 41
+    const chars=[...TYPE];const n=Math.floor(chars.length*clamp((bt-38)/3));
+    const sent=bt>=41.5;
+    $('#typed').textContent=sent?'':chars.slice(0,n).join('');
+    $('#ph').style.display=(n>0&&!sent)?'none':'';
+    $('.cur').style.opacity=(Math.floor(t*3)%2===0||(n>0&&!sent))?1:0;
+    $('#m2').style.display=sent?'':'none';pop($('#m2'),t,b(41.5),0.3);
+    $('#m3').style.display=bt>=43.5?'':'none';pop($('#m3'),t,b(43.5),0.3);
+    $('#m1').style.display=bt>=37?'':'none';
+    // finger tap on send
+    const td=$('#tapdot');const tp=prog(bt,40.8,0.7);
+    td.style.display=(bt>40.6&&bt<42)?'':'none';
+    const pr=ph.getBoundingClientRect(), sr=$('#stage').getBoundingClientRect();
+    td.style.left=(pr.right-sr.left-100)+'px';td.style.top=(pr.bottom-sr.top-100)+'px';
+    td.style.transform=`scale(${bt<41.5?lerp(1.4,1,eOut(tp)):lerp(1,0.7,prog(bt,41.5,0.3))})`;
+    td.style.opacity=bt<41.5?eOut(tp):1-prog(bt,41.5,0.5);
+    pop($('#s5 .num'),t,b(44),0.4);
+    const nm=$('#s5 .num');if(bt>45){const q=(bt-45)%2/2;nm.style.transform=`scale(${1+0.05*Math.max(0,Math.sin(clamp(q/0.15)*Math.PI))})`;}
+    upIn($('#s5 .meta'),t,b(45),0.35,40);
+  }
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>
