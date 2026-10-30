@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Doutor, você atende aos sábados?</title>
+<link rel="stylesheet" href="../lib/common.css">
+<style>
+  #stage{background:#000;color:#fff}
+  .bg{position:absolute;left:-200px;top:-200px;width:1480px;height:2320px;object-fit:cover;filter:blur(40px) brightness(.6)}
+  .ph{position:absolute;left:0;top:330px;width:1080px;height:1440px;transform-origin:50% 40%}
+  .shot{position:absolute;inset:0;overflow:hidden}
+  .tx{position:absolute;left:40px;right:40px;top:215px;text-align:center;font-family:'Liberation Serif',serif;font-weight:700;font-size:96px;line-height:1.08;
+    text-transform:uppercase;color:#fff;-webkit-text-stroke:12px #000;paint-order:stroke fill;letter-spacing:1px}
+  #q{font-size:74px;top:160px}
+  #sim{position:absolute;left:0;right:0;top:860px;text-align:center;font-family:'Liberation Serif',serif;font-weight:700;font-size:190px;color:#fff;
+    -webkit-text-stroke:16px #000;paint-order:stroke fill}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cam"><div id="photos"></div><div class="tx" id="q">"Doutor, você atende<br>aos sábados?"</div><div id="sim">SIM!</div><div class="tx" id="lbl"></div></div>
+  <div id="flash"></div>
+</div>
+<script src="../lib/anim.js"></script>
+<script>
+// [photo, label] in the order the user asked for
+const SCENES=[['0-original',''],['1-domingo','E no domingo'],['2-natal','No Natal'],['3-ano-novo','No Ano Novo'],['4-dia-santo','No dia santo'],
+  ['5-apagao','No apagão'],['6-tempestade','Na tempestade'],['7-neve','Na neve'],['8-enchente','Na enchente']];
+const INTRO=3.2, STEP=1.5, DUR=INTRO+STEP*(SCENES.length-1)+1.0;
+const start=i=>i===0?0:INTRO+STEP*(i-1);
+$('#photos').innerHTML=SCENES.map(([f],i)=>`<div class="shot" id="p${i}"><img class="bg" src="fotos/${f}.jpg"><img class="ph" src="fotos/${f}.jpg"></div>`).join('');
+
+function render(t){
+  let cur=0;SCENES.forEach((_,i)=>{if(t>=start(i))cur=i;});
+  SCENES.forEach((_,i)=>{
+    const el=$('#p'+i);el.style.display=i===cur?'':'none';
+    if(i!==cur)return;
+    const s0=start(i), len=i===0?INTRO:STEP;
+    // punch-in on the cut, then a slow push for the rest of the shot
+    const punch=i===0?0:0.07*(1-eOut(prog(t,s0,0.35)));
+    el.querySelector('.ph').style.transform=`scale(${1.0+punch+0.05*prog(t,s0,len+1)})`;
+  });
+  $('#flash').style.opacity=SCENES.slice(1).reduce((m,_,k)=>Math.max(m,0.55*(1-prog(t,start(k+1),0.18))*(t>=start(k+1)?1:0)),0);
+  // intro: question, then "SIM!"
+  const q=$('#q');vis(q,t,0,INTRO);slam(q,t,0.1,1.4);
+  const sim=$('#sim');vis(sim,t,1.7,INTRO);stamp(sim,t,1.7,-4,0.3);
+  // scene labels
+  const lb=$('#lbl');
+  if(vis(lb,t,INTRO,DUR+1)){lb.textContent=SCENES[cur][1];slam(lb,t,start(cur),1.35,0.18);}
+}
+window.render=render;window.DUR=DUR;render(0);
+</script>
+</body>
+</html>
