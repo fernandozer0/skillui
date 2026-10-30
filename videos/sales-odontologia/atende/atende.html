@@ -5,6 +5,8 @@
 <title>Doutor, você atende aos sábados?</title>
 <link rel="stylesheet" href="../lib/common.css">
 <style>
+  @font-face{font-family:'Montserrat';font-weight:400 900;src:url(../fonts/Montserrat-900.woff2) format('woff2')}
+  @font-face{font-family:'Cinzel';font-weight:500 700;src:url(../fonts/Cinzel-700.woff2) format('woff2')}
   #stage{background:#000;color:#fff}
   .bg{position:absolute;left:-200px;top:-200px;width:1480px;height:2320px;object-fit:cover;filter:blur(40px) brightness(.6)}
   .ph{position:absolute;left:0;top:330px;width:1080px;height:1440px;transform-origin:50% 40%}
@@ -14,20 +16,30 @@
   #q{font-size:74px;top:160px}
   #sim{position:absolute;left:0;right:0;top:860px;text-align:center;font-family:'Liberation Serif',serif;font-weight:700;font-size:190px;color:#fff;
     -webkit-text-stroke:16px #000;paint-order:stroke fill}
+  #cta{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding-bottom:180px;text-align:center;background:rgba(0,0,0,.45)}
+  #cta .h{font-family:'Liberation Serif',serif;font-weight:700;font-size:92px;line-height:1.08;text-transform:uppercase;-webkit-text-stroke:12px #000;paint-order:stroke fill;margin-top:30px}
+  #cta .sub{font-family:'Inter',sans-serif;font-weight:700;font-size:44px;margin-top:22px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+  #cta .meta{text-shadow:0 2px 8px rgba(0,0,0,.8)}
 </style>
 </head>
 <body>
 <div id="stage">
-  <div id="cam"><div id="photos"></div><div class="tx" id="q">"Doutor, você atende<br>aos sábados?"</div><div id="sim">SIM!</div><div class="tx" id="lbl"></div></div>
+  <div id="cam"><div id="photos"></div><div class="tx" id="q">"Doutor, você atende<br>aos sábados?"</div><div id="sim">SIM!</div><div class="tx" id="lbl"></div>
+    <div id="cta"><div id="bdg"></div><div class="h">Agende sua<br>avaliação</div><div class="sub">Atendemos todas as especialidades 🦷</div><div id="wa"></div><div class="meta">@salesodontologia_ · 📍 Curitiba-PR</div></div></div>
   <div id="flash"></div>
 </div>
+<script>window.EMOJI_DIR='../emoji';</script>
 <script src="../lib/anim.js"></script>
 <script>
 // [photo, label] in the order the user asked for
 const SCENES=[['0-original',''],['1-domingo','E no domingo'],['2-natal','No Natal'],['3-ano-novo','No Ano Novo'],['4-dia-santo','No dia santo'],
   ['5-apagao','No apagão'],['6-tempestade','Na tempestade'],['7-neve','Na neve'],['8-enchente','Na enchente']];
-const INTRO=3.2, STEP=1.5, DUR=INTRO+STEP*(SCENES.length-1)+1.0;
+// atende.html?cta adds a booking end card after the last scene
+const CTA=location.search.includes('cta'), CTA_LEN=3.5;
+const INTRO=3.2, STEP=1.5, LAST=INTRO+STEP*(SCENES.length-1), DUR=LAST+(CTA?CTA_LEN:1.0);
 const start=i=>i===0?0:INTRO+STEP*(i-1);
+document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
+$('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML(); emojify($('#cta'));
 $('#photos').innerHTML=SCENES.map(([f],i)=>`<div class="shot" id="p${i}"><img class="bg" src="fotos/${f}.jpg"><img class="ph" src="fotos/${f}.jpg"></div>`).join('');
 
 function render(t){
@@ -46,7 +58,14 @@ function render(t){
   const sim=$('#sim');vis(sim,t,1.7,INTRO);stamp(sim,t,1.7,-4,0.3);
   // scene labels
   const lb=$('#lbl');
-  if(vis(lb,t,INTRO,DUR+1)){lb.textContent=SCENES[cur][1];slam(lb,t,start(cur),1.35,0.18);}
+  if(vis(lb,t,INTRO,CTA?LAST+STEP:DUR+1)){lb.textContent=SCENES[cur][1];slam(lb,t,start(cur),1.35,0.18);}
+  // booking end card over the blurred last photo
+  const ct=$('#cta');
+  if(CTA&&t>=LAST+STEP){ct.style.display='flex';const c0=LAST+STEP;ct.style.opacity=eOut(prog(t,c0,0.3));
+    $('#p'+(SCENES.length-1)).querySelector('.ph').style.filter=`blur(${12*eOut(prog(t,c0,0.4))}px)`;
+    pop($('#cta .badge'),t,c0+0.05,0.45);slam($('#cta .h'),t,c0+0.3,1.4);upIn($('#cta .sub'),t,c0+0.7,0.4,30);
+    pop($('#cta .wa'),t,c0+1.0,0.45);waBeat($('#cta .wa'),t/0.75,(c0+1.6)/0.75);upIn($('#cta .meta'),t,c0+1.3,0.4,30);
+  }else ct.style.display='none';
 }
 window.render=render;window.DUR=DUR;render(0);
 </script>
