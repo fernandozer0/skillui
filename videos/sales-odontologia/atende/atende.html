@@ -7,12 +7,11 @@
 <style>
   @font-face{font-family:'Montserrat';font-weight:400 900;src:url(../fonts/Montserrat-900.woff2) format('woff2')}
   @font-face{font-family:'Cinzel';font-weight:500 700;src:url(../fonts/Cinzel-700.woff2) format('woff2')}
-  /* the frame is exactly the photos' 3:4 shape: whole photo, nothing else behind it */
-  html,body{height:1440px}
-  #stage{height:1440px;background:#000;color:#fff}
-  .ph{position:absolute;left:0;top:0;width:1080px;height:1440px}
-  /* text sits low, over the tray and floor, never over the doctor */
-  .tx{position:absolute;left:30px;right:30px;bottom:70px;text-align:center;font-family:'Liberation Serif',serif;font-weight:700;font-size:96px;line-height:1.06;
+  /* photos extended to 9:16 by estender.py (edges stretched, no AI) */
+  #stage{background:#000;color:#fff}
+  .ph{position:absolute;left:0;top:0;width:1080px;height:1920px}
+  /* text sits in the stretched sky above the doctor's head */
+  .tx{position:absolute;left:30px;right:30px;bottom:1630px;text-align:center;font-family:'Liberation Serif',serif;font-weight:700;font-size:96px;line-height:1.06;
     text-transform:uppercase;color:#fff;-webkit-text-stroke:12px #000;paint-order:stroke fill;letter-spacing:1px}
   #q{font-size:72px}
   #sim{font-size:150px;-webkit-text-stroke:16px #000}
@@ -42,7 +41,7 @@ const INTRO=3.2, STEP=1.5, LAST=INTRO+STEP*(SCENES.length-1), DUR=CTA?LAST+STEP+
 const start=i=>i===0?0:INTRO+STEP*(i-1);
 document.getElementById('stage').insertAdjacentHTML('afterbegin',GOLD_DEFS);
 $('#bdg').outerHTML=badgeHTML(); $('#wa').outerHTML=waHTML(); emojify($('#cta'));
-$('#photos').innerHTML=SCENES.map(([f],i)=>`<img class="ph" id="p${i}" src="fotos/${f}.jpg">`).join('');
+$('#photos').innerHTML=SCENES.map(([f],i)=>`<img class="ph" id="p${i}" src="fotos-9x16/${f}.jpg">`).join('');
 
 function render(t){
   // hard cut to each photo (shown whole, never zoomed or cropped) with a quick flash
