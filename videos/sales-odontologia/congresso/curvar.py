@@ -9,7 +9,7 @@ import sys
 import numpy as np
 from PIL import Image
 
-STRENGTH = 0.32     # 0 = flat; centre is magnified by 1/(1-STRENGTH)
+STRENGTH = 0.18     # 0 = flat; centre is magnified by 1/(1-STRENGTH)
 
 src = np.asarray(Image.open(sys.argv[1]).convert("RGBA")).astype(np.float32)
 a = src[..., 3]
