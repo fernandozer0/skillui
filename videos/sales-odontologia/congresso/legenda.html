@@ -10,10 +10,13 @@
     letter-spacing:-1.5px;color:#fbefcc;transform:scaleX(.88);transform-origin:50% 0;
     /* tight dark halo keeps the letters readable over bright lights */
     text-shadow:0 0 2px rgba(0,0,0,.75),0 2px 4px rgba(0,0,0,.7),0 0 16px rgba(0,0,0,.55),0 0 10px rgba(255,214,140,.25)}
+  /* ó and á reuse the É acute (the font's lowercase acutes are much longer and thinner) */
+  .ac{position:relative;display:inline-block}
+  .ac::after{content:'É';position:absolute;left:50%;top:0;transform:translate(-50%,.2em);clip-path:inset(-.4em 0 calc(100% - .06em) 0)}
   /* soft, almost invisible darkening behind the whole caption */
   #shade{position:absolute;left:140px;top:860px;width:800px;height:520px;border-radius:50%;
     background:radial-gradient(ellipse at center,rgba(0,0,0,.42) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,0) 72%)}
 </style>
 </head>
-<body><div id="shade"></div><div id="t">É óbvio que eu vou em<br>congressos. Imagina<br>cuidar de um paciente<br>baseado no que tá<br>viralizado na internet</div></body>
+<body><div id="shade"></div><div id="t">É <span class="ac">o</span>bvio que eu vou em<br>congressos. Imagina<br>cuidar de um paciente<br>baseado no que t<span class="ac">a</span><br>viralizado na internet</div></body>
 </html>
