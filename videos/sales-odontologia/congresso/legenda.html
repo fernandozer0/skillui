@@ -3,13 +3,17 @@
 <head>
 <meta charset="utf-8">
 <style>
-  @font-face{font-family:'Instrument Serif';font-style:normal;src:url(../fonts/InstrumentSerif-normal.woff2) format('woff2')}
+  @font-face{font-family:'Cormorant Garamond';font-weight:700;font-style:normal;src:url(../fonts/CormorantGaramond-700.woff2) format('woff2')}
   html,body{margin:0;width:1080px;height:1920px;background:transparent}
   /* condensed serif, cream, tight leading, soft glow: same look as the reference reel */
-  #t{position:absolute;left:0;right:0;top:958px;text-align:center;font-family:'Instrument Serif',serif;font-size:76px;line-height:.8;
-    letter-spacing:-2.5px;color:#f8ebc6;-webkit-text-stroke:1.4px #f8ebc6;transform:scaleX(.93);transform-origin:50% 0;
-    text-shadow:0 0 10px rgba(255,214,140,.35),0 1px 3px rgba(0,0,0,.55)}
+  #t{position:absolute;left:0;right:0;top:952px;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:70px;line-height:.88;
+    letter-spacing:-1.5px;color:#fbefcc;transform:scaleX(.88);transform-origin:50% 0;
+    /* tight dark halo keeps the letters readable over bright lights */
+    text-shadow:0 0 2px rgba(0,0,0,.75),0 2px 4px rgba(0,0,0,.7),0 0 16px rgba(0,0,0,.55),0 0 10px rgba(255,214,140,.25)}
+  /* soft, almost invisible darkening behind the whole caption */
+  #shade{position:absolute;left:140px;top:860px;width:800px;height:520px;border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(0,0,0,.42) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,0) 72%)}
 </style>
 </head>
-<body><div id="t">É óbvio que eu vou em<br>congressos. Imagina<br>cuidar de um paciente<br>baseado no que tá<br>viralizado na internet</div></body>
+<body><div id="shade"></div><div id="t">É óbvio que eu vou em<br>congressos. Imagina<br>cuidar de um paciente<br>baseado no que tá<br>viralizado na internet</div></body>
 </html>

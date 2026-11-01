@@ -13,7 +13,7 @@ STRENGTH = 0.18     # 0 = flat; centre is magnified by 1/(1-STRENGTH)
 
 src = np.asarray(Image.open(sys.argv[1]).convert("RGBA")).astype(np.float32)
 a = src[..., 3]
-ys, xs = np.nonzero(a > 8)
+ys, xs = np.nonzero((a > 200) & (src[..., 0] > 200))   # the letters, not the soft shade behind them
 cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
 rx, ry = (xs.max() - xs.min()) / 2 * 1.08, (ys.max() - ys.min()) / 2 * 1.2
 
